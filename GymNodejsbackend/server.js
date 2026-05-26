@@ -99,6 +99,7 @@ app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
     origin: "https://duopofitnessclubmanager.vercel.app",
+    // origin: "http://localhost:1212",
     credentials: true,
   }),
 );
@@ -110,6 +111,7 @@ console.log("allplans documentos", await AllPlans.countDocuments());
 const io = new Server(server, {
   cors: {
     origin: "https://duopofitnessclubmanager.vercel.app",
+    // origin: "http://localhost:1212",
     methods: ["GET", "POST"],
   },
 });

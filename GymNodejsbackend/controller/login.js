@@ -12,7 +12,7 @@ export const login = async (req, res) => {
   if (!user) {
     return res.status(404).json({ code: "NOT_AUTHORIZED" });
   }
-  const isMatch =await bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
   console.log("login password", password, user.password, isMatch);
   if (!isMatch) {
     return res.status(400).json({ code: "PASSWORD_IS_INCORRECT" });
@@ -27,9 +27,9 @@ export const login = async (req, res) => {
   console.log("login token", token);
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
+    secure: true,
 
-    sameSite: "strict",
+    sameSite: "none",
     maxAge: 60 * 60 * 1000,
   });
   console.log("login token 2", res.cookies?.token);
@@ -60,9 +60,9 @@ export const signUp = async (req, res) => {
   });
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
+    secure: true,
 
-    sameSite: "strict",
+    sameSite: "none",
     maxAge: 3600000,
   });
   // const signUser = jwt

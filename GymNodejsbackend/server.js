@@ -160,12 +160,12 @@ async function hero() {
   const user = await User.find();
   console.log("user", user);
 }
-// hero();
+hero();
 async function lala() {
   const lala = await GoogleUser.findById("69e9c605f24831d153e14472");
   console.log("lal", lala);
 }
-// lala();
+lala();
 app.post("/updatepass", async (req, res) => {
   const { email, password, newPassword } = req.body;
   if (!email && !password && !newPassword) {

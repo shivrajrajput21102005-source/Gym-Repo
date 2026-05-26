@@ -1,9 +1,15 @@
 import ConnectDB from "./db.js";
 import AllPlans from "./modules/allPlansModule.js";
-ConnectDB();
+// ConnectDB();
+
 const declarPlans = async () => {
   console.log("palns save");
-  if (AllPlans == null) {
+  try {
+    await ConnectDB();
+  } catch (err) {
+    return console.log("err in db connection", err);
+  }
+  if ((await AllPlans.countDocuments()) == 0) {
     await AllPlans.insertMany([
       {
         name: "Starter",

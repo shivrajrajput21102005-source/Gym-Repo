@@ -2,10 +2,15 @@ import LoginForm from "./loginForm";
 import SignUpForm from "./SignupForm";
 import "./App.css";
 import Home from "./Home";
-import { Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Member from "./Member";
 import Plans from "./Plans";
-import Payments from "./PaymentComponent/payment";
+import {
+  MemberPage,
+  PaymentPage,
+  PlanPage,
+  SelectedPlans,
+} from "./PaymentComponent/payment";
 import Expiry from "./Expiry";
 import Logout from "./Logout";
 // import { useAuth } from "./AuthProvider";
@@ -20,6 +25,7 @@ import { useEffect, useState } from "react";
 import AddMember from "./AddMember";
 import { ToastContainer } from "react-toastify";
 import HomeMemberMemberShipshow from "./HomeMemberMemberShipshow";
+import ForgotePassword from "./ForgotePassword";
 
 function App() {
   const [appReady, setAppReady] = useState(false);
@@ -58,28 +64,36 @@ function App() {
       <div>
         <ToastContainer position="top-right" />
         <Routes>
-          <Route element={<PublicRoutes />}>
-            {/* <div className="flex justify-center"> */}
+          <Route path="/" element={<Dashboard />}>
+            <Route element={<PublicRoutes />}>
+              {/* <div className="flex justify-center"> */}
+              <Route path="/login" element={<LoginForm />}></Route>
+              <Route path="/registration" element={<SignUpForm />}></Route>
+            </Route>
 
-            <Route path="/login" element={<LoginForm />}></Route>
-            <Route path="/registration" element={<SignUpForm />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route
+              path="/selectedplans/:id"
+              element={<SelectedPlans />}
+            ></Route>
+            <Route path="/plans" element={<Plans />}></Route>
             {/* </div> */}
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Dashboard />}>
-              <Route path="/home" element={<Home />}></Route>
+            <Route path="/forgetpassword" element={<ForgotePassword />}></Route>
+            <Route element={<ProtectedRoute />}>
               <Route
                 path="/home/membership/:name"
                 element={<HomeMemberMemberShipshow />}
               ></Route>
-              <Route path="/payments" element={<Payments />}></Route>
+              <Route path="/payments" element={<MemberPage />}></Route>
+              <Route path="/payment" element={<PaymentPage />}></Route>
+              <Route path="/plan" element={<PlanPage />}></Route>
+
               <Route path="/expiries" element={<Expiry />}></Route>
               <Route path="/members" element={<Member />}></Route>
               <Route
                 path="/members/create-member"
                 element={<AddMember />}
               ></Route>
-              <Route path="/plans" element={<Plans />}></Route>
               <Route path="/profile/logout" element={<Logout />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
               {/* <Route path="/chats" element={<Chat />}></Route> */}

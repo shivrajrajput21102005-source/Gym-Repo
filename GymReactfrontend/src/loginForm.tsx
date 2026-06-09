@@ -17,7 +17,7 @@ import { useMutation } from "@tanstack/react-query";
 
 const LoginForm = () => {
   const { login } = useAuth();
-  const { mutate, error, isPending } = useMutation({
+  const { mutate, data,error, isPending } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       toast.success("Login successfull");
@@ -75,6 +75,7 @@ const LoginForm = () => {
   //   return <SignUpForm />;
   // }
   // console.log("mutatiom",motation.isError,onError?.message ,motation.isSuccess)
+  console.log("on login data",data)
   return (
     <div className="w-full flex justify-center mt-12">
       <div className="w-full max-w-md ">
@@ -91,7 +92,7 @@ const LoginForm = () => {
           <div className="h-8  flex items-end justify-center">
             {error && (
               <p className="text-red-500 text-sm font-semibold">
-                login failed !, Try again
+                login failed !, Try again {error.message}
               </p>
             )}
           </div>
@@ -100,12 +101,12 @@ const LoginForm = () => {
             {/* Username Field */}
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">
-                Useremail
+                Useremaili
               </label>
               <input
                 type="text"
                 name="email"
-                placeholder="Enter your emailava"
+                placeholder="Enter your email"
                 onChange={getFormValue}
                 value={form.email}
                 className={`w-full px-4 py-3 rounded-lg border-2   focus:outline-none transition-colors duration-200 text-gray-900 placeholder-gray-400 ${10 > 13 ? "focus:border-red-500 border-red-500 " : "border-gray-200 focus:border-blue-500 "}`}
@@ -136,7 +137,7 @@ const LoginForm = () => {
               </div>
             </div>
             <div className="flex justify-end text-sm text-blue-600 hover:underline">
-              <NavLink to="/forgot-password">Forgot password?</NavLink>
+              <NavLink to="/forgetpassword">Forgot password?</NavLink>
             </div>
             {/* Submit Button */}
             <button

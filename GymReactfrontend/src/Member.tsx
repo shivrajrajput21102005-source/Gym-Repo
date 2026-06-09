@@ -83,21 +83,21 @@ const MembershipDashboard = () => {
     queryKey:['allmemberget'],
     queryFn:()=>axiosFetch("/user/member")
   })
-  if (isLoading) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <div className="w-12 h-12 rounded-full border-4 border-t-gray-600 border-gray-200 animate-spin"></div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="w-full h-screen flex justify-center items-center">
+  //       <div className="w-12 h-12 rounded-full border-4 border-t-gray-600 border-gray-200 animate-spin"></div>
+  //     </div>
+  //   );
+  // }
   console.log("expireserror" , data,error)
-  if (error) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <div>someting wrong</div>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="w-full h-screen flex justify-center items-center">
+  //       <div>someting wrong</div>
+  //     </div>
+  //   );
+  // }
   return (
     <div className="min-h-screen w-full bg-gray-100 p-8">
       {/* Page Header */}

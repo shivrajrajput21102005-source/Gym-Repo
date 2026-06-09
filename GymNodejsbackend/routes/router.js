@@ -33,9 +33,9 @@ export const content = async (req, res) => {
   res.json({ ram: "content is here" });
 };
 router.get("/", async (req, res) => {
-  // let user = await User.findById(req.user.id);
+  let user = await User.findById(req.user.id);
   // if (!user) {
-  const user = await GoogleUser.findById(req.user.id);
+  // const user = await GoogleUser.findById(req.user.id);
   // }
   // console.log("user", req.user, "user");
   res.json({ success: true, user });

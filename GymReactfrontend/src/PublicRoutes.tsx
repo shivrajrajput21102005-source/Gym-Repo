@@ -6,6 +6,6 @@ function PublicRoutes() {
   // console.log("user of publicrouted", user);
   console.log("public routges routes");
 
-  return user ? <Navigate to="/home" /> : <Outlet />;
+  return user ? <Navigate to="/" replace /> : <Outlet />;
 }
 export default PublicRoutes;

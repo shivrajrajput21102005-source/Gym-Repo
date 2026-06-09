@@ -174,12 +174,13 @@
 
 import React, { useState } from "react";
 import UseFetch from "./UseFetch";
+import { useNavigate } from "react-router-dom";
 
 type ChoosePlanProp = {
   choosePlanFunction?: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-type AllPlans = {
+export type AllPlans = {
   _id: string;
   name: string;
   offer: string;
@@ -195,10 +196,11 @@ type FetchingProps = {
 };
 
 export default function GymPlans({ choosePlanFunction }: ChoosePlanProp) {
+  const navigate = useNavigate();
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
     "monthly",
   );
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<AllPlans | null>(null);
 
   const { loading, data, error } = UseFetch<FetchingProps>(
     `/allPlans?q=${billingCycle}`,
@@ -222,20 +224,20 @@ export default function GymPlans({ choosePlanFunction }: ChoosePlanProp) {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
       {/* Hero */}
-      <div className="relative h-56 flex items-center justify-center bg-indigo-100">
-        <h1 className="relative text-4xl font-extrabold tracking-tight text-indigo-700">
+      <div className="relative md:p-10 p-4 flex items-center justify-center bg-indigo-100">
+        <h1 className="relative md:text-2xl font-extrabold tracking-tight text-indigo-700">
           Transform Your Fitness Journey
         </h1>
       </div>
 
       {/* Toggle */}
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-2 md:mt-8">
         <div className="flex bg-gray-200 rounded-full p-1">
           {["monthly", "yearly"].map((cycle) => (
             <button
               key={cycle}
               onClick={() => setBillingCycle(cycle as "monthly" | "yearly")}
-              className={`px-6 py-2 rounded-full font-semibold transition ${
+              className={`md:px-6 px-4 py-2 rounded-full font-semibold transition ${
                 billingCycle === cycle
                   ? "bg-indigo-600 text-white shadow"
                   : "text-gray-600 hover:bg-gray-300"
@@ -248,19 +250,22 @@ export default function GymPlans({ choosePlanFunction }: ChoosePlanProp) {
       </div>
 
       {/* Plans Grid */}
-      <div className="px-12 font-bold text-2xl mt-10">Plans</div>
-      <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto mt-8 px-6">
+      <div className="md:px-12 pl-6 font-bold text-2xl md:mt-10">Plans</div>
+      <div className="grid md:grid-cols-3 md:gap-8 gap-4 max-w-7xl mx-auto mt-8 px-6">
         {data?.allPlans.map((plan) => (
           <PlanCard
             key={plan._id}
             plan={plan}
             price={plan.price}
             billingCycle={billingCycle}
-            selected={selectedPlan === plan._id}
+            selected={selectedPlan === plan}
             onSelect={() => {
-              setSelectedPlan(plan._id);
+              setSelectedPlan(plan);
               if (choosePlanFunction) {
                 choosePlanFunction(plan._id);
+              }
+              if (selectedPlan) {
+                navigate(`/selectedplans/${selectedPlan._id}`);
               }
             }}
           />
@@ -287,7 +292,7 @@ function PlanCard({
 }: PlanCardProps) {
   return (
     <div
-      className={`relative rounded-2xl p-6 border shadow-sm transition transform
+      className={`relative rounded-2xl p-4 md:p-6 border shadow-sm transition transform
         ${selected ? "border-indigo-500 bg-indigo-50 scale-105" : "border-gray-200 bg-white"}
       `}
     >
@@ -297,26 +302,27 @@ function PlanCard({
       </span>
 
       <h2 className="text-xl font-bold">{plan.name}</h2>
-      <p className="text-4xl font-extrabold text-indigo-600 mt-4">
+      <p className="text-4xl font-extrabold text-indigo-600 md:mt-4">
         ₹{billingCycle === "monthly" ? price : price}
       </p>
-      <p className="mt-2 text-green-600 font-medium">{plan.offer}</p>
+      <p className="md:mt-2 text-green-600 font-medium">{plan.offer}</p>
+      <div className="md:block flex justify-between">
+        <ul className="md:mt-6 space-y-2 text-gray-700">
+          {plan.features.map((feature, i) => (
+            <li key={i} className="flex items-center">
+              <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
+              {feature}
+            </li>
+          ))}
+        </ul>
 
-      <ul className="mt-6 space-y-2 text-gray-700">
-        {plan.features.map((feature, i) => (
-          <li key={i} className="flex items-center">
-            <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      <button
-        onClick={onSelect}
-        className="mt-6 w-full py-2 rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400"
-      >
-        {selected ? "Selected" : "Get Started"}
-      </button>
+        <button
+          onClick={onSelect}
+          className="md:mt-6 md:w-full md:py-2 px-2 h-10 text-nowrap rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400"
+        >
+          {selected ? "Selected" : "Get Started"}
+        </button>
+      </div>
     </div>
   );
 }

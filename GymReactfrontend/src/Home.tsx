@@ -1,5 +1,6 @@
 import HomeMembershow from "./HomeMembershow";
-
+import GymRecords from "./Recordes";
+// import Auth from "./AuthProvider"
 // type User = {
 //   email: string;
 // };
@@ -66,27 +67,38 @@ export type mwp = {
   end_date: string;
   member: membera;
 };
-
+import { Loading, Pulse,L} from "./loading";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useQuery } from "@tanstack/react-query";
 import axiosFetch from "./AxiosFetch";
+import { useAuth } from "./AuthProvider";
+import HorizontalStepper from "./HorizontalStepper";
 // import HomeMembershow from "./HomeMembershow";
 type FetchProp = {
   mwp: mwp[];
 };
 export default function PaymentPage() {
   dayjs.extend(customParseFormat);
+  const { user } = useAuth();
   const { data, isLoading, isFetching, error } = useQuery<FetchProp>({
     queryKey: ["memberwithplan"],
     queryFn: () => axiosFetch("/user/memberwithplans"),
   });
   // const { loading, data, error } = UseFetch<mwpp>("/user/memberwithplans");
   console.log("loading tank", isLoading);
-  if (isFetching) {
-    console.log("feching", isFetching);
-    return <div className="w-full bg-red-900">is fecjoj</div>;
-  }
+  // if (isLoading) {
+  //   console.log("feching", isFetching);
+  //   return <Pulse/>;
+  // }
+  // if (error) {
+  //   console.log("error messsage", error.message);
+  //   return (
+  //     <div className="w-full h-screen flex justify-center items-center">
+  //       something went wrong
+  //     </div>
+  //   );
+  // }
   // const remaindays =
   const d = (s: string, e: string) => {
     const start = dayjs(s, "DD/MM/YYYY");
@@ -100,26 +112,29 @@ export default function PaymentPage() {
   //   setInputValue(member);
   //   // Add logic to fetch member/payment data
   // };
+  // if (true) {
+  //   return <div>
+  //   <Loading />
+  //   <Pulse/>
+  //   <L/>
 
+  //   </div>
+  // }
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="bg-gray-100 ">
-        <div>
+    <div className="min-h-screen bg-gray-400 flex flex-col overflow-hidden">
+      <div className={`bg-gray-400 `}>
+        {/* <div>
           {isLoading && (
             <div className="w-10 h-10 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
             // <div className="w-full h-60 bg-red-600 flex justify-center items-center">
             //   loading...
             // </div>
           )}
-        </div>
-        <div>
-          {error && (
-            <div className="w-full h-60 bg-red-600 flex justify-center items-center">
-              {error.message} console.erro;
-            </div>
-          )}
-        </div>
-        {!error && !isLoading && (
+        </div> */}
+        <GymRecords />
+        {/* <HorizontalStepper/>  */}
+
+        {user?.role==="admin" && (
           <div className="bg-gray-400 py-6 px-4">
             <div className="w-full py-4 px-4 font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-700  to-gray-100">
               Recent Membership owner
@@ -134,17 +149,7 @@ export default function PaymentPage() {
                     <HomeMembershow mm={m} />
                   </div>
                 ),
-                // <div
-                //   key={i}
-                //   className="flex gap-6 bg-white shadow-lg bg-green-400"
-                // >
-                //   <h1>{m.member.name}</h1>
-                //   <h1>{m.price}</h1>
-                //   <h1>{m.start_date}</h1>
-                //   <h1>{m.end_date}</h1>
 
-                //   <h1>{m.price}</h1>
-                // </div>
               )}
             </div>
           </div>

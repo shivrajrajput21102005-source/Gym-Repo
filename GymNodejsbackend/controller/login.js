@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 // const user = User;
 export const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log("login route");
   if (!email || !password) {
     return res.status(403).json({ code: "EMAIL_PASS_IS_REQUIRED" });
   }
@@ -28,15 +29,14 @@ export const login = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     secure: true,
-
     sameSite: "none",
     maxAge: 60 * 60 * 1000,
   });
-  console.log("login token 2", res.cookies?.token);
 
   res.status(200).json({ code: "LOGIN_SUCCESS", user });
 };
 
+// console.log("login token 2", req.cookies?.token);
 export const signUp = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -56,14 +56,14 @@ export const signUp = async (req, res) => {
     userName: makeUserName,
   });
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+    expiresIn: "2h",
   });
   res.cookie("token", token, {
     httpOnly: true,
-    secure: true,
+    secure: false,
 
-    sameSite: "none",
-    maxAge: 3600000,
+    sameSite: "lax",
+    maxAge: 3600000 * 2,
   });
   // const signUser = jwt
   console.log("signup user", user);

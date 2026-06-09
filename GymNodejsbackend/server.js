@@ -67,12 +67,14 @@ import MessageModule from "./modules/messageModule.js";
 import GoogleUser from "./modules/realgoogleUser.js";
 import AllPlans from "./modules/allPlansModule.js";
 import { declarPlans } from "./seedAllPlans.js";
+import { isadmin } from "./middlewere/isAdmin.js";
+import AdminRoute from "./routes/AdminRoutes.js";
 // import publicRoute from "./routes/publicRoute.js";
 // import Jwt from "jsonwebtoken";
 
 // ConnectDB();
 const app = express();
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 const server = http.createServer(app);
 const PORT = process.env.PORT | 5000;
 // ConnectDB().then(() => {
@@ -83,14 +85,13 @@ const PORT = process.env.PORT | 5000;
 const start = async () => {
   try {
     await ConnectDB();
-    server.listen(PORT, () => {
+    server.listen(PORT, "0.0.0.0", () => {
       console.log("server run on port ", PORT);
     });
   } catch (err) {
     console.log("err in start", err);
   }
 };
-start();
 declarPlans();
 app.use(express.json());
 // app.use(cors());
@@ -98,12 +99,14 @@ app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    origin: "https://duopofitnessclubmanager.vercel.app",
+    // origin: "https://duopofitnessclubmanager.vercel.app",
     // origin: "http://localhost:1212",
+    origin: true,
     credentials: true,
   }),
 );
 
+start();
 console.log("allplans documentos", await AllPlans.countDocuments());
 
 // app.use(cors());
@@ -139,6 +142,7 @@ const razorpay = new Razorpay({
   key_secret: "MafHv7zPpMi754NtYnuz7Clo",
 });
 app.use("/user", isauthorized, router);
+app.use("/admin", isadmin, AdminRoute);
 app.use("/", publicRouter);
 app.post("/login", login);
 app.post("/signup", signUp);
@@ -170,6 +174,23 @@ async function lala() {
   console.log("lal", lala);
 }
 lala();
+async function lala2() {
+  // console.log("lala function ", process.env.PORT)
+  try {
+    const res = await fetch("https://api.resend.com/domains", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer re_j9UDg4pH_kiVVZvRxLpneQqG3wvvdrBsm",
+      },
+    });
+    console.log("resend lala", await res.text());
+    console.log("resend lala", res.status);
+  } catch (err) {
+    console.log("lala catch", err);
+  }
+}
+lala2();
+
 app.post("/updatepass", async (req, res) => {
   const { email, password, newPassword } = req.body;
   if (!email && !password && !newPassword) {

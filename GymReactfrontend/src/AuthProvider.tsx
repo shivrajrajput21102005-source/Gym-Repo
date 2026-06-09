@@ -13,6 +13,7 @@ interface User {
   email: string;
   userName: string;
   password: string;
+  role:string
 }
 type CR = {
   email: string;

@@ -21,8 +21,7 @@ const HomeMembershow = ({ mm }: mwm) => {
   console.log("typr of " , today ,typeof dayjs(), typeof mm.end_date)
   const remainingDays = diffrentDays(today, mm.end_date);
   // const l = dayjs(mm.end_date).format("DD/MM/YYYY")
-  const addo = dayjs().add(1, "day").toString();
-  const name = mm.member.name;
+
   return (
     // <div className="shadow-lg bg-white py-4 w-80 rounded-lg px-4 ">
     //   <p>{mm.start_date}</p>

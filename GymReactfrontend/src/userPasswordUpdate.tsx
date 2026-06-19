@@ -163,7 +163,7 @@ export default function UserPasswordUpdate() {
               <p className="text-sm">{user._id}</p>
             </div>
             <button onClick={() => delet.mutate(user._id)} className="bg-red-500 px-3 py-2 rounded hover:bg-red-600">
-              {delet.isLoading ? "Deleting..." : "Delete"}
+              {delet.isPending ? "Deleting..." : "Delete"}
             </button>
           </div>
         ))}

@@ -13,6 +13,7 @@ import {
 } from "./PaymentComponent/payment";
 import Expiry from "./Expiry";
 import Logout from "./Logout";
+import Verifycode from "./Verifycode";
 // import { useAuth } from "./AuthProvider";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard";
@@ -64,11 +65,16 @@ function App() {
       <div>
         <ToastContainer position="top-right" />
         <Routes>
+          <Route path="/forgetpassword" element={<ForgotePassword />}></Route>
+          <Route
+            path="/forgetpassword/verify-code/:code"
+            element={<Verifycode />}
+          ></Route>
+          <Route path="/login" element={<LoginForm />}></Route>
+          <Route path="/registration" element={<SignUpForm />}></Route>
           <Route path="/" element={<Dashboard />}>
             <Route element={<PublicRoutes />}>
               {/* <div className="flex justify-center"> */}
-              <Route path="/login" element={<LoginForm />}></Route>
-              <Route path="/registration" element={<SignUpForm />}></Route>
             </Route>
 
             <Route path="/" element={<Home />}></Route>
@@ -78,7 +84,6 @@ function App() {
             ></Route>
             <Route path="/plans" element={<Plans />}></Route>
             {/* </div> */}
-            <Route path="/forgetpassword" element={<ForgotePassword />}></Route>
             <Route element={<ProtectedRoute />}>
               <Route
                 path="/home/membership/:name"

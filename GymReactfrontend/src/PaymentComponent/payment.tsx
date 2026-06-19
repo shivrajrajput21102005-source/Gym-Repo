@@ -217,10 +217,15 @@ const members = [
     avatar: "https://i.pravatar.cc/100?img=3",
   },
 ];
-
+export type SelectedProp = {
+  id:number,
+  name:string,
+  role:string,
+  avatar:string
+}
 export function MemberPage() {
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<SelectedProp| null>(null);
   const navigate = useNavigate();
 
   const filteredMembers = members.filter((m) =>
@@ -315,7 +320,7 @@ export function PlanPage() {
     { id: 2, name: "Premium", price: 1000 },
   ];
 
-  const handleSelectPlan = (plan) => {
+  const handleSelectPlan = (plan:any) => {
     navigate("/payment", { state: { member, plan } });
   };
 
@@ -358,7 +363,7 @@ export function PaymentPage() {
       currency: "INR",
       name: "Gym App",
       description: `Payment for ${plan.name} plan`,
-      handler: function (response) {
+      handler: function (response:any) {
         alert("✅ Payment Successful! ID: " + response.razorpay_payment_id);
       },
       prefill: {

@@ -177,7 +177,6 @@ import { FaUser, FaHome, FaUsers, FaCreditCard } from "react-icons/fa";
 import { Menu, X } from "lucide-react";
 import { NavLink, Outlet, Link } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
-import { FaColonSign } from "react-icons/fa6";
 
 const UserLinks = ({ onLinkClick }: { onLinkClick: () => void }) => {
   return (

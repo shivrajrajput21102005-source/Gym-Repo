@@ -3,9 +3,9 @@ import { api } from "../Api";
 import { useState } from "react";
 import Plan from "../Plans";
 import type {} from "globals";
-import type { MemberProp } from "./payment";
+import type { SelectedProp } from "./payment";
 type selectMemberProp = {
-  selectMember: MemberProp;
+  selectMember: SelectedProp;
 };
 import UseFetch from "../UseFetch";
 // import { Heading1 } from "lucide-react";
@@ -26,7 +26,7 @@ const memberpayment = ({ selectMember }: selectMemberProp) => {
   const [paymentData, setPaymentData] = useState<dataprop | null>(null);
   const [posting, setPosting] = useState(false);
   const { loading, data, error } = UseFetch(
-    `/user/payment/selectedmember?memberId=${selectMember._id}`,
+    `/user/payment/selectedmember?memberId=${selectMember.id}`,
   );
   //   console.log(
   //     "memberpayment",
@@ -34,7 +34,7 @@ const memberpayment = ({ selectMember }: selectMemberProp) => {
   //     selectMember,
   //     selectMember.name,
   //   );
-  const getMemberShip = async (memberId: string, planId: string) => {
+  const getMemberShip = async (memberId: number, planId: string) => {
     setPosting(true);
     try {
       const res = await api.post(
@@ -90,7 +90,7 @@ const memberpayment = ({ selectMember }: selectMemberProp) => {
           {choosePlan && (
             // <HandlePayment/>
             <button
-              onClick={() => getMemberShip(selectMember._id, choosePlan)}
+              onClick={() => getMemberShip(selectMember.id, choosePlan)}
               className="bg-green-500 py-2 px-4"
             >
               {posting ? "load" : "Get Membership"}

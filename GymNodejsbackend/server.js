@@ -99,9 +99,9 @@ app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    // origin: "https://duopofitnessclubmanager.vercel.app",
+    origin: "https://duopofitnessclubmanager.vercel.app",
     // origin: "http://localhost:1212",
-    origin: true,
+    // origin: true,
     credentials: true,
   }),
 );
@@ -138,8 +138,8 @@ io.on("connection", (socket) => {
 ///Razorpay
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_SY9KTUPucXwHLj",
-  key_secret: "MafHv7zPpMi754NtYnuz7Clo",
+  key_id: process.env.RAZORPAY_TESTID,
+  key_secret: RAZORPAY_SECRETKEY,
 });
 app.use("/user", isauthorized, router);
 app.use("/admin", isadmin, AdminRoute);
@@ -189,7 +189,7 @@ async function lala2() {
     console.log("lala catch", err);
   }
 }
-lala2();
+// lala2();
 
 app.post("/updatepass", async (req, res) => {
   const { email, password, newPassword } = req.body;

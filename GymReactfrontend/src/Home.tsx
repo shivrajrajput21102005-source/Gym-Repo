@@ -67,13 +67,11 @@ export type mwp = {
   end_date: string;
   member: membera;
 };
-import { Loading, Pulse,L} from "./loading";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useQuery } from "@tanstack/react-query";
 import axiosFetch from "./AxiosFetch";
 import { useAuth } from "./AuthProvider";
-import HorizontalStepper from "./HorizontalStepper";
 // import HomeMembershow from "./HomeMembershow";
 type FetchProp = {
   mwp: mwp[];
@@ -81,7 +79,7 @@ type FetchProp = {
 export default function PaymentPage() {
   dayjs.extend(customParseFormat);
   const { user } = useAuth();
-  const { data, isLoading, isFetching, error } = useQuery<FetchProp>({
+  const { data, isLoading} = useQuery<FetchProp>({
     queryKey: ["memberwithplan"],
     queryFn: () => axiosFetch("/user/memberwithplans"),
   });

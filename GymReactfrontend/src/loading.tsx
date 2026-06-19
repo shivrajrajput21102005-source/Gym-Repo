@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useRef, useState } from "react";
+import  { useState } from "react";
 
 export const Loading = () => {
   const items = Array.from({ length: 10 });
@@ -123,7 +123,7 @@ export const Pulse = () => {
   return (
     <div className="w-full  ">
       <div className="absolute top-1/2 left-1/2 ">
-        {item.map((ii, i) => {
+        {item.map((_, i) => {
           const angle = (360 / item.length) * i;
 
           return (
@@ -154,91 +154,94 @@ export const Pulse = () => {
   );
 };
 
-export const L = () => {
-  const [closetindex, st] = useState(0);
-  const babuRef = useRef<HTMLDivElement | null>(null);
-  const childRef = useRef<HTMLDivElement[]>([]);
+// export const L = () => {
+//   const [closetindex, st] = useState(0);
+//   const babuRef = useRef<HTMLDivElement>(null);
+//   const childRef = useRef<(HTMLDivElement|null)[]>([]);
 
-  const i = [
-    { id: 1, color: "blue" },
-    { id: 2, color: "green" },
-    { id: 3, color: "gray" },
-    { id: 4, color: "red" },
-  ];
+//   const i = [
+//     { id: 1, color: "blue" },
+//     { id: 2, color: "green" },
+//     { id: 3, color: "gray" },
+//     { id: 4, color: "red" },
+//   ];
 
-const ITEM_WIDTH = 160
-  const disi = [...i, ...i, ...i];
-  useEffect(() => {
-    const c = babuRef.current;
-    if (!c) {
-      return;
-    }
-    console.log("rerender");
-    c.scrollLeft = i.length * ITEM_WIDTH;
-  }, []);
-  console.log("rerender");
+// const ITEM_WIDTH = 160
+//   const disi = [...i, ...i, ...i];
+//   useEffect(() => {
+//     const c = babuRef.current;
+//     if (!c) {
+//       return;
+//     }
+//     console.log("rerender");
+//     c.scrollLeft = i.length * ITEM_WIDTH;
+//   }, []);
+//   console.log("rerender");
 
-  const onScroll = () => {
+//   const onScroll = () => {
   
-    let c = babuRef.current;
-    const scrooby = i.length * ITEM_WIDTH;
-    if (!c) {
-      return console.log("c nhi he");
-    }
-    const center = c?.getBoundingClientRect();
+//     let c = babuRef.current;
+//     const scrooby = i.length * ITEM_WIDTH;
+//     if (!c) {
+//       return console.log("c nhi he");
+//     }
+//     const center = c?.getBoundingClientRect();
 
-    if (c.scrollLeft >= scrooby * 2) {
-      c.scrollLeft -= scrooby;
-    }
-    if (c.scrollLeft <= 0) {
-      c.scrollLeft += scrooby;
-    }
-    let closest = 0;
-    let counry = Infinity;
-    if (!childRef.current) {
-      return;
-    }
-    for (let index = 0; index < disi.length; index++) {
-      const child = childRef?.current[index].getBoundingClientRect();
-      const childCenter = child?.left + child?.width / 2;
-      const parentCenter = center.left + center.width / 2;
-      const distance = Math.abs(parentCenter - childCenter);
+//     if (c.scrollLeft >= scrooby * 2) {
+//       c.scrollLeft -= scrooby;
+//     }
+//     if (c.scrollLeft <= 0) {
+//       c.scrollLeft += scrooby;
+//     }
+//     let closest = 0;
+//     let counry = Infinity;
+//     if (!childRef.current) {
+//       return;
+//     }
+//     for (let index = 0; index < disi.length; index++) {
+//       if(!childRef?.current[index]){
+//         return
+//       }
+//       const child = childRef.current[index].getBoundingClientRect();
+//       const childCenter = child?.left + child?.width / 2;
+//       const parentCenter = center.left + center.width / 2;
+//       const distance = Math.abs(parentCenter - childCenter);
  
-      if (distance < counry) {
-        counry = distance;
-        closest = index;
-      }
-    }
+//       if (distance < counry) {
+//         counry = distance;
+//         closest = index;
+//       }
+//     }
 
-    console.log("closestIndex =", closest);
-    if (closest !== closetindex) {
-      st(closest);
-    }
-  };
-
-
-  return (
-    <>
-      <div
-        onScroll={onScroll}
-        className="flex w-[480px] h-40 overflow-x-scroll no-scrollbar "
-        ref={babuRef}
-      >
-        {disi.map((it, ii) => {
-          // const ff = findIndex(ii);
-          return (
-            <div
-              key={ii}
-              ref={(el) => (childRef.current[ii] = el)}
-              className={`bg-${it.color}-400 w-40 h-40 ${closetindex % 4 === ii % 4 ? "scale-75" : "scale-50"} nowrap shrink-0 font-bold text-xl  text-center transition-transform duration-500`}
-            >
-              {it.color} {ii}
-            </div>
-          );
-        })}
-      </div>
+//     console.log("closestIndex =", closest);
+//     if (closest !== closetindex) {
+//       st(closest);
+//     }
+//   };
 
 
-    </>
-  );
-};
+//   return (
+//     <>
+//       <div
+//         onScroll={onScroll}
+//         className="flex w-[480px] h-40 overflow-x-scroll no-scrollbar "
+//         ref={babuRef}
+//       >
+//         {disi.map((it, ii) => {
+//           // const ff = findIndex(ii);
+//           return (
+//             <div
+//               key={ii}
+//               ref={(el) => {childRef.current[ii] = el}}
+//               className={`bg-${it.color}-400 w-40 h-40 ${closetindex % 4 === ii % 4 ? "scale-75" : "scale-50"} nowrap shrink-0 font-bold text-xl  text-center transition-transform duration-500`}
+//             >
+//               {it.color} {ii}
+//             </div>
+//           );
+//         })}
+//       </div>
+
+
+//     </>
+//   );
+// };

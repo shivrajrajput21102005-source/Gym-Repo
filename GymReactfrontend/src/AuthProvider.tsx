@@ -13,12 +13,10 @@ interface User {
   email: string;
   userName: string;
   password: string;
-  role:string
+  role: string;
 }
 type CR = {
   email: string;
-  password: string;
-  reEnterPassword: string;
 };
 
 type loginParaProp = {

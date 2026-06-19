@@ -79,7 +79,7 @@ const MembershipDashboard = () => {
   // const totalMembers = members.length;
   // const expiredMembers = members.filter(m => dayjs(m.endDate).isBefore(dayjs())).length;
   // const activeMembers = totalMembers - expiredMembers;
-  const {data,isLoading,error }= useQuery<FetchingProp>({
+  const {data,error }= useQuery<FetchingProp>({
     queryKey:['allmemberget'],
     queryFn:()=>axiosFetch("/user/member")
   })

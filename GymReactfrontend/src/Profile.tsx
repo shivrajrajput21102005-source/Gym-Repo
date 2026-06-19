@@ -17,7 +17,7 @@ type FetchingProp = {
 const Profile = () => {
   const {user} = useAuth()
   console.log("user in profile", user)
-  const { loading, data, error } = UseFetch<FetchingProp>("/user/posts");
+  const { data } = UseFetch<FetchingProp>("/user/posts");
   const [im, setIm] = useState<string | null>(null);
   // const [posts, setPost] = useState<PostProp[]>([]);
 
@@ -179,97 +179,97 @@ const Profile = () => {
 };
 export default Profile;
 
-function ProfilePage() {
-  const [profilePic, setProfilePic] = useState<string | ArrayBuffer | null>(
-    "https://i.pravatar.cc/150?img=5",
-  );
-  const user = {
-    name: "Shivam Kumar",
-    joinedDate: "2024-01-15",
-    currentPlan: "Premium Plan",
-    recentPlans: ["Basic Plan", "Standard Plan"],
-  };
+// function ProfilePage() {
+//   const [profilePic, setProfilePic] = useState<string | ArrayBuffer | null>(
+//     "https://i.pravatar.cc/150?img=5",
+//   );
+//   const user = {
+//     name: "Shivam Kumar",
+//     joinedDate: "2024-01-15",
+//     currentPlan: "Premium Plan",
+//     recentPlans: ["Basic Plan", "Standard Plan"],
+//   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setProfilePic(reader?.result);
-      reader.readAsDataURL(file);
-    }
-  };
+//   const handleImageChange = (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onloadend = () => setProfilePic(reader?.result);
+//       reader.readAsDataURL(file);
+//     }
+//   };
 
-  const handleLogout = () => {
-    alert("You have been logged out!");
-    // Add your logout logic here
-  };
+//   const handleLogout = () => {
+//     alert("You have been logged out!");
+//     // Add your logout logic here
+//   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
-      {/* Profile Card */}
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md text-center">
-        {/* Profile Picture */}
-        <div className="relative inline-block">
-          <img
-            src={profilePic}
-            alt="Profile"
-            className="w-32 h-32 rounded-full border-4 border-indigo-500 mx-auto"
-          />
-          <label
-            htmlFor="profilePicUpload"
-            className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition"
-          >
-            ✎
-          </label>
-          <input
-            id="profilePicUpload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleImageChange}
-          />
-        </div>
+//   return (
+//     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
+//       {/* Profile Card */}
+//       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md text-center">
+//         {/* Profile Picture */}
+//         <div className="relative inline-block">
+//           <img
+//             src={profilePic}
+//             alt="Profile"
+//             className="w-32 h-32 rounded-full border-4 border-indigo-500 mx-auto"
+//           />
+//           <label
+//             htmlFor="profilePicUpload"
+//             className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition"
+//           >
+//             ✎
+//           </label>
+//           <input
+//             id="profilePicUpload"
+//             type="file"
+//             accept="image/*"
+//             className="hidden"
+//             onChange={handleImageChange}
+//           />
+//         </div>
 
-        {/* Name */}
-        <h2 className="text-2xl font-bold mt-4">{user.name}</h2>
-        <p className="text-gray-500">
-          Joined on {new Date(user.joinedDate).toDateString()}
-        </p>
+//         {/* Name */}
+//         <h2 className="text-2xl font-bold mt-4">{user.name}</h2>
+//         <p className="text-gray-500">
+//           Joined on {new Date(user.joinedDate).toDateString()}
+//         </p>
 
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="mt-4 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-        >
-          Logout
-        </button>
+//         {/* Logout Button */}
+//         <button
+//           onClick={handleLogout}
+//           className="mt-4 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+//         >
+//           Logout
+//         </button>
 
-        {/* Current Plan */}
-        <div className="mt-8 text-left">
-          <h3 className="text-lg font-semibold text-indigo-600">
-            Current Plan
-          </h3>
-          <p className="mt-2 bg-indigo-50 p-3 rounded-lg font-medium">
-            {user.currentPlan}
-          </p>
-        </div>
+//         {/* Current Plan */}
+//         <div className="mt-8 text-left">
+//           <h3 className="text-lg font-semibold text-indigo-600">
+//             Current Plan
+//           </h3>
+//           <p className="mt-2 bg-indigo-50 p-3 rounded-lg font-medium">
+//             {user.currentPlan}
+//           </p>
+//         </div>
 
-        {/* Recent Plans */}
-        <div className="mt-6 text-left">
-          <h3 className="text-lg font-semibold text-gray-700">Recent Plans</h3>
-          {user.recentPlans.length > 0 ? (
-            <ul className="mt-2 space-y-2">
-              {user.recentPlans.map((plan, i) => (
-                <li key={i} className="bg-gray-100 p-2 rounded-lg">
-                  {plan}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500 mt-2">No recent plans</p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+//         {/* Recent Plans */}
+//         <div className="mt-6 text-left">
+//           <h3 className="text-lg font-semibold text-gray-700">Recent Plans</h3>
+//           {user.recentPlans.length > 0 ? (
+//             <ul className="mt-2 space-y-2">
+//               {user.recentPlans.map((plan, i) => (
+//                 <li key={i} className="bg-gray-100 p-2 rounded-lg">
+//                   {plan}
+//                 </li>
+//               ))}
+//             </ul>
+//           ) : (
+//             <p className="text-gray-500 mt-2">No recent plans</p>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }

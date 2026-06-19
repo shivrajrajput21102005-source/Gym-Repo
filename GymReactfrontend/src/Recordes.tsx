@@ -73,7 +73,7 @@
 ////
 import { useQuery } from "@tanstack/react-query";
 import axiosFetch from "./AxiosFetch";
-import { useState } from "react";
+// import { useState } from "react";
 type Deadlift = {
   name: string;
   weight: string;
@@ -109,10 +109,10 @@ const gymData = {
 };
 
 export default function GymRecords() {
-  const { data, isLoading, error } = useQuery<FetchingRecordsProp>({
-    queryKey: ["records"],
-    queryFn: () => axiosFetch("/records"),
-  });
+  // const { data, isLoading, error } = useQuery<FetchingRecordsProp>({
+  //   queryKey: ["records"],
+  //   queryFn: () => axiosFetch("/records"),
+  // });
 
   // if (error) {
   //   return <div>something won</div>;

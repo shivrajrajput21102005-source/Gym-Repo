@@ -65,7 +65,6 @@ const verify = async (verificationCode: string, verificationId: string) => {
 const Verifycode = () => {
   const { code } = useParams();
   const navigate = useNavigate();
-  const [btnDisable, setBtnDisable] = useState(true);
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [values, setValues] = useState<string[]>(Array(6).fill(""));
 
@@ -128,7 +127,6 @@ const Verifycode = () => {
               className="bg-white border-2 border-blue-500 rounded-lg w-10 h-12 outline-none focus:border-blue-800 text-center text-lg"
             />
           ))}
-
         </div>
         <h1 className="text-red-500 h-4">{mutate?.data?.message}</h1>
         <button
@@ -137,7 +135,6 @@ const Verifycode = () => {
         >
           Verify
         </button>
-    
       </div>
     </div>
   );

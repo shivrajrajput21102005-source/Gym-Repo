@@ -7,7 +7,7 @@ import Member from "./Member";
 import Plans from "./Plans";
 import TermsAndConditions from "./TermsAndConditions";
 import PaymentStatusPage from "./PaymentComponent/PaymentStatus";
-import { Subscription, Process } from "./PaymentComponent/Subscription";
+import { Subscription } from "./PaymentComponent/Subscription";
 import {
   MemberPage,
   PaymentPage,
@@ -101,10 +101,10 @@ function App() {
               element={<TermsAndConditions />}
             ></Route>
             <Route path="/s" element={<Subscription />}></Route>
-            <Route
+            {/* <Route
               path="/s/:orderid/paymentprocessing"
               element={<Process />}
-            ></Route>
+            ></Route> */}
             <Route element={<ProtectedRoute />}>
               <Route
                 path="/home/membership/:name"

@@ -1,8 +1,6 @@
 import { useMutation} from "@tanstack/react-query";
 import { api } from "../Api";
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-// import SomeThingWrongPage from "../someThingWrongPage";
+import { useNavigate } from "react-router-dom";
 import { Loader } from "../loading";
 export const Subscription = () => {
   const navigate = useNavigate();
@@ -79,50 +77,50 @@ export const Subscription = () => {
   );
 };
 
-export const Process = () => {
-  const { orderId } = useParams();
-  const navigate = useNavigate();
+// export const Process = () => {
+//   const { orderId } = useParams();
+//   const navigate = useNavigate();
 
-  const getPaymentStatus = async () => {
-    console.log("aeait sob");
-    try {
-      const response = await api.get(
-        `/payment/paymentstatus?orderid:${orderId}`,
-      );
-      // if (response.data.status === "SUCCESS") {
-      //   navigate(`/payment-${orderId}/status/success`, { replace: true });
-      // } else if (response.data.status === "FAILED") {
-      //   navigate(`/payment-${orderId}/status/failed`, { replace: true });
-      // }
-    } catch (err: any) {
-      console.log("err on process", err.message);
-      // navigate(`/payment-${orderId}/status/failed`, { replace: true });
-    }
-  };
-  // const paymentStatus = useQuery({
-  //   queryKey: ["paymentStatus"],
-  //   queryFn: getPaymentStatus,
-  // });
-  // if (false){
-  //   paymentStatus.data;
-  //   getPaymentStatus()
-  // }
-  useEffect(() => {
-    if (!orderId) {
-      navigate("/s");
-    }
-  }, []);
-  return (
-    <div className="flex justify-center flex-col ">
-      <div className="border-blue-400  w-20 h-20 border-t-blue-900 rounded-full border-4 animate-spin"></div>
+//   const getPaymentStatus = async () => {
+//     console.log("aeait sob");
+//     try {
+//       const response = await api.get(
+//         `/payment/paymentstatus?orderid:${orderId}`,
+//       );
+//       // if (response.data.status === "SUCCESS") {
+//       //   navigate(`/payment-${orderId}/status/success`, { replace: true });
+//       // } else if (response.data.status === "FAILED") {
+//       //   navigate(`/payment-${orderId}/status/failed`, { replace: true });
+//       // }
+//     } catch (err: any) {
+//       console.log("err on process", err.message);
+//       // navigate(`/payment-${orderId}/status/failed`, { replace: true });
+//     }
+//   };
+//   // const paymentStatus = useQuery({
+//   //   queryKey: ["paymentStatus"],
+//   //   queryFn: getPaymentStatus,
+//   // });
+//   // if (false){
+//   //   paymentStatus.data;
+//   //   getPaymentStatus()
+//   // }
+//   useEffect(() => {
+//     if (!orderId) {
+//       navigate("/s");
+//     }
+//   }, []);
+//   return (
+//     <div className="flex justify-center flex-col ">
+//       <div className="border-blue-400  w-20 h-20 border-t-blue-900 rounded-full border-4 animate-spin"></div>
 
-      <span>processing...</span>
-      <button
-        className="p-4 border-4 border-blue-300"
-        onClick={() => navigate(-1)}
-      >
-        navigate
-      </button>
-    </div>
-  );
-};
+//       <span>processing...</span>
+//       <button
+//         className="p-4 border-4 border-blue-300"
+//         onClick={() => navigate(-1)}
+//       >
+//         navigate
+//       </button>
+//     </div>
+//   );
+// };

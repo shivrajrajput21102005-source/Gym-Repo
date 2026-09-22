@@ -25,8 +25,8 @@ const isauthorized = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ code: "NOT_AUTHORIZED_NO USER" });
     }
-    console.log("user id auth", user._id);
     req.user = user;
+    console.log("user id auth", user._id);
     // console.log("auth", req.user, req.user.id);
     next();
   } catch (error) {

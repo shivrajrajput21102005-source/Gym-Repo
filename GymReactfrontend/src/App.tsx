@@ -1,10 +1,13 @@
 import LoginForm from "./loginForm";
-import SignUpForm from "./SignupForm";
+import SignUpForm from "./CreateAccount/SignupForm";
 import "./App.css";
-import Home from "./Home";
+import Home from "./1.HomeComponents/Home";
 import { Route, Routes } from "react-router-dom";
 import Member from "./Member";
 import Plans from "./Plans";
+import TermsAndConditions from "./TermsAndConditions";
+import PaymentStatusPage from "./PaymentComponent/PaymentStatus";
+import { Subscription, Process } from "./PaymentComponent/Subscription";
 import {
   MemberPage,
   PaymentPage,
@@ -15,9 +18,9 @@ import Expiry from "./Expiry";
 import Logout from "./Logout";
 import Verifycode from "./Verifycode";
 // import { useAuth } from "./AuthProvider";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./Meddlewere.For.Routes/ProtectedRoute";
 import Dashboard from "./Dashboard";
-import PublicRoutes from "./PublicRoutes";
+import PublicRoutes from "./Meddlewere.For.Routes/PublicRoutes";
 import Profile from "./Profile";
 import Createposts from "./Createposts";
 // import Chat from "./chat";
@@ -27,9 +30,12 @@ import AddMember from "./AddMember";
 import { ToastContainer } from "react-toastify";
 import HomeMemberMemberShipshow from "./HomeMemberMemberShipshow";
 import ForgotePassword from "./ForgotePassword";
-
+// import NetworkStatus from "./NetworkStatus";
+import VerifyCodeForSignUp from "./CreateAccount/VerifyCodeForSignUp";
+import LoginRoutes from "./Meddlewere.For.Routes/LoginRoutes";
 function App() {
   const [appReady, setAppReady] = useState(false);
+  // const isOnLine = NetworkStatus();
   // const navigate = useNavigate();
   // navigate("/home")
   // const token = localStorage.getItem("token");
@@ -42,6 +48,9 @@ function App() {
   if (!appReady) {
     return <Apploading />;
   }
+  // if (isOnLine) {
+  //   return <Logout />;
+  // }
   // useEffect(() => {
   // if (!user) {
   //   console.log("usertsx", loading, !loading, user, !user);
@@ -65,13 +74,16 @@ function App() {
       <div>
         <ToastContainer position="top-right" />
         <Routes>
-          <Route path="/forgetpassword" element={<ForgotePassword />}></Route>
-          <Route
-            path="/forgetpassword/verify-code/:code"
-            element={<Verifycode />}
-          ></Route>
-          <Route path="/login" element={<LoginForm />}></Route>
-          <Route path="/registration" element={<SignUpForm />}></Route>
+          <Route element={<LoginRoutes />}>
+            <Route path="/forgetpassword" element={<ForgotePassword />}></Route>
+            <Route
+              path="/forgetpassword/verify-code/:code"
+              element={<Verifycode />}
+            ></Route>
+            <Route path="/login" element={<LoginForm />}></Route>
+            <Route path="/registration" element={<SignUpForm />}></Route>
+            <Route path="/verifycode" element={<VerifyCodeForSignUp />}></Route>
+          </Route>
           <Route path="/" element={<Dashboard />}>
             <Route element={<PublicRoutes />}>
               {/* <div className="flex justify-center"> */}
@@ -84,12 +96,25 @@ function App() {
             ></Route>
             <Route path="/plans" element={<Plans />}></Route>
             {/* </div> */}
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsAndConditions />}
+            ></Route>
+            <Route path="/s" element={<Subscription />}></Route>
+            <Route
+              path="/s/:orderid/paymentprocessing"
+              element={<Process />}
+            ></Route>
             <Route element={<ProtectedRoute />}>
               <Route
                 path="/home/membership/:name"
                 element={<HomeMemberMemberShipshow />}
               ></Route>
               <Route path="/payments" element={<MemberPage />}></Route>
+              <Route
+                path="/payment-status"
+                element={<PaymentStatusPage />}
+              ></Route>
               <Route path="/payment" element={<PaymentPage />}></Route>
               <Route path="/plan" element={<PlanPage />}></Route>
 

@@ -203,3 +203,52 @@ export const declarPlans = async () => {
   }
 };
 // declarPlans();
+
+export const product  =  [
+    {
+      "_id": "1",
+      "name": "Whey Protein Isolate",
+      "category": "Protein",
+      "price": 2999,
+      "image": "https://example.com/images/whey-protein.jpg",
+      "description": "High-quality whey protein isolate for muscle recovery and growth.",
+      "stock": 50
+    },
+    {
+      "_id": "2",
+      "name": "Creatine Monohydrate",
+      "category": "Creatine",
+      "price": 1499,
+      "image": "https://example.com/images/creatine.jpg",
+      "description": "Pure creatine monohydrate to boost strength and performance.",
+      "stock": 100
+    },
+    {
+      "_id": "3",
+      "name": "Mass Gainer",
+      "category": "Protein",
+      "price": 3499,
+      "image": "https://example.com/images/mass-gainer.jpg",
+      "description": "Calorie-dense formula for bulking and muscle gain.",
+      "stock": 30
+    },
+    {
+      "_id": "4",
+      "name": "BCAA Powder",
+      "category": "Supplement",
+      "price": 1999,
+      "image": "https://example.com/images/bcaa.jpg",
+      "description": "Branched-chain amino acids to reduce fatigue and improve recovery.",
+      "stock": 75
+    },
+    {
+      "_id": "5",
+      "name": "Pre-Workout Formula",
+      "category": "Supplement",
+      "price": 2499,
+      "image": "https://example.com/images/preworkout.jpg",
+      "description": "Energy-boosting pre-workout blend with caffeine and beta-alanine.",
+      "stock": 40
+    }
+  ]
+

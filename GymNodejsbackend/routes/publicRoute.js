@@ -1,32 +1,58 @@
-// import plans from "razorpay/dist/types/plans.js";
 import AllPlans from "../modules/allPlansModule.js";
-import dotenv from "dotenv";
-import User from "../modules/userModule.js";
-
-dotenv.config();
-import express, { response } from "express";
-import { Resend } from "resend";
+import { Router } from "express";
+import { product } from "../seedAllPlans.js";
 import nodemailer from "nodemailer";
 import { randomUUID } from "crypto";
 import verification from "../modules/verifycode.js";
+import Product from "../modules/ProductModule.js";
 const publicRoute = express.Router();
-// const resend = new Resend(process.env.RESEND_KEY);
-export const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.USER_EMAIL,
-    pass: process.env.EMAIL_PASS,
-  },
+
+// ALL plans Route
+publicRoute.get("/allPlans", async (req, res) => {
+  const query = req.query.q;
+  const allPlans = await AllPlans.find({
+    is_active: true,
+    plan_type: `${query}`,
+  });
+  if (!allPlans) {
+    res.status(500).json({ code: "SOMETHING_WENT_WRONG" });
+  }
+  res.status(200).json({ allPlans });
 });
+
+// Products
+
+// publicRoute.get("/products", async (req, res) => {
+//   const product = await Product.find();
+//   if (!product) {
+//     res.status(500).json({ code: "SOMETHING_WENT_WRONG" });
+//   }
+//   res.json({ product });
+// });
+
 const records = {
   deadlift: [
-    { name: "John", weight: "250 kg" },
-    { name: "Mike", weight: "240 kg" },
-    { name: "Sarah", weight: "230 kg" },
-    { name: "David", weight: "225 kg" },
-    { name: "Emma", weight: "220 kg" },
+    { name: "Rahul Tej", weight: "250 kg" },
+    { name: "Pratyakhsha Singh", weight: "240 kg" },
+    { name: "Sohil Khan", weight: "230 kg" },
+    { name: "Babu", weight: "225 kg" },
+    { name: "Vikash Yadav", weight: "220 kg" },
   ],
   pushups: [
+    { name: "Aaman Patola", reps: 150 },
+    { name: "Somya kumar", reps: 140 },
+    { name: "Sopen ", reps: 135 },
+    { name: "Daksha", reps: 130 },
+    { name: "Naman Sharma", reps: 125 },
+  ],
+  pullups: [
+    { name: "Rohan", reps: 150 },
+    { name: "Prince", reps: 140 },
+    { name: "Soden", reps: 135 },
+    { name: "Danu", reps: 130 },
+    { name: "Om", reps: 125 },
+  ],
+  op: [
     { name: "Alex", reps: 150 },
     { name: "Chris", reps: 140 },
     { name: "Sophia", reps: 135 },
@@ -34,23 +60,11 @@ const records = {
     { name: "Olivia", reps: 125 },
   ],
 };
-publicRoute.get("/allPlans", async (req, res) => {
-  //   const query = req.query.q
-  // const allPlans = await AllPlans.find({ is_active: true,plan_type:`${query}` });
-  console.log("someone get allplans");
-  const allPlans = await AllPlans.find();
-  res.json({ allPlans });
-});
+
 publicRoute.get("/records", (req, res) => {
   res.json({ records });
 });
-publicRoute.get("/selectedplan/:plan_id", async (req, res) => {
-  const planId = req.params.plan_id;
-  console.log("plan id for selectedPland", planId);
 
-  const plan = await AllPlans.findById(planId);
-  res.json({ plan });
-});
 
 publicRoute.post("/forgetpassword/send-code", async (req, res) => {
   const { email } = req.body;
@@ -60,18 +74,18 @@ publicRoute.post("/forgetpassword/send-code", async (req, res) => {
   }
   const user = await User.findOne({ email });
   if (!user) {
-    return res.json({ message: "email_not_found" });
+    return res.status(404).json({ message: "email_not_found" });
   }
   const code = Math.floor(Math.random() * 1000000).toString();
   const verificationId = randomUUID();
 
-  await verification.create({
-    email,
-    verifyCode: code,
-    verificationId,
-  });
+  // await verification.create({
+  //   email,
+  //   verifyCode: code,
+  //   verificationId,
+  // });
   console.log("code for verify", code);
-  res.json({ verificationId });
+  // res.json({ verificationId });
   // try {
   //   await transporter.sendMail({
   //     to: email,
@@ -82,27 +96,27 @@ publicRoute.post("/forgetpassword/send-code", async (req, res) => {
   // } catch (err) {
   //   console.log("nodemailer error", err.message);
   // }
-  // try {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: email,
+      subject: "hellow from gym backend",
+      html: "<h2 classname='text-2xl font-bold bg-red-500'>this is a test emails code: {code}</h2>",
+    });
+    console.log("re3");
 
-  //   const { data, error } = await resend.emails.send({
-  //     from: "onboarding@resend.dev",
-  //     to: email,
-  //     subject: "hellow from gym backend",
-  //     html: "<h2 classname='text-2xl font-bold bg-red-500'>this is a test emails</h2>",
-  //   });
-  //   console.log("re3");
-
-  //   if (data) {
-  //     console.log("data from resend", data);
-  //   }
-  //   if (error) {
-  //     console.log("error from resend", error);
-  //   }
-  // } catch (error) {
-  //   console.log("catch resend error", error.message);
-  // }
+    if (data) {
+      console.log("data from resend", data);
+    }
+    if (error) {
+      console.log("error from resend", error);
+    }
+    res.json({ verificationId });
+  } catch (error) {
+    console.log("catch resend error", error.message);
+  }
 });
-// curl -X GET https://api.resend.com/domains ` -H  "Authorization:Bearer re_j9UDg4pH_kiVVZvRxLpneQqG3wvvdrBsm"
+
 publicRoute.post("/forgetpassword/verify-code", async (req, res) => {
   const { verificationId, verificationCode } = req.body;
   console.log("apply", await verification.find());
@@ -122,6 +136,9 @@ publicRoute.post("/forgetpassword/verify-code", async (req, res) => {
   await verify.save();
   return res.json({ message: "verified" });
 });
-console.log("random", Math.floor(Math.random() * 10000));
+
+publicRoute.get("/products", (req, res) => {
+  res.json({ product });
+});
 
 export default publicRoute;

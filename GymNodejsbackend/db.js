@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+import dotenv from "dotenv";
+dotenv.config();
 const ConnectDB = async () => {
   try {
     console.log(process.env.MONGO_URI);
@@ -11,3 +12,4 @@ const ConnectDB = async () => {
   }
 };
 export default ConnectDB;
+

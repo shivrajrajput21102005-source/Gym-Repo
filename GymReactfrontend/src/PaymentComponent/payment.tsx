@@ -218,14 +218,14 @@ const members = [
   },
 ];
 export type SelectedProp = {
-  id:number,
-  name:string,
-  role:string,
-  avatar:string
-}
+  id: number;
+  name: string;
+  role: string;
+  avatar: string;
+};
 export function MemberPage() {
   const [search, setSearch] = useState("");
-  const [selected, setSelected] = useState<SelectedProp| null>(null);
+  const [selected, setSelected] = useState<SelectedProp | null>(null);
   const navigate = useNavigate();
 
   const filteredMembers = members.filter((m) =>
@@ -320,7 +320,7 @@ export function PlanPage() {
     { id: 2, name: "Premium", price: 1000 },
   ];
 
-  const handleSelectPlan = (plan:any) => {
+  const handleSelectPlan = (plan: any) => {
     navigate("/payment", { state: { member, plan } });
   };
 
@@ -363,7 +363,7 @@ export function PaymentPage() {
       currency: "INR",
       name: "Gym App",
       description: `Payment for ${plan.name} plan`,
-      handler: function (response:any) {
+      handler: function (response: any) {
         alert("✅ Payment Successful! ID: " + response.razorpay_payment_id);
       },
       prefill: {
@@ -406,6 +406,7 @@ export function PaymentPage() {
 import type { AllPlans } from "../Plans";
 export const SelectedPlans = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [plan, setPlan] = useState<AllPlans | null>(null);
   const plansQuery = useQuery({
     queryKey: ["selectedPlan"],
@@ -417,34 +418,81 @@ export const SelectedPlans = () => {
     }
   }, [plansQuery.data]);
 
-  console.log("selected palns id = ", id);
   if (plansQuery.isLoading) {
     return <div>Loading plans</div>;
   }
   if (plansQuery.isError) {
     return <div>{plansQuery.error.message}op</div>;
   }
+  const handlePaymentSuccess = (response: any) => {
+  navigate("/payment-status", {
+    state: {
+      paymentResponse: {
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_order_id: response.razorpay_order_id,
+        razorpay_signature: response.razorpay_signature,
+        status: "success", // or "failure" based on verification
+      },
+    },
+  });
+}
   return (
-    <div>
-      <p>selected page plans</p>
-      <p className="bg-red-800 w=6 h-8">{plan?.name}</p>
-      <span className="absolute top-4 right-4 bg-indigo-600 text-xs text-white px-3 py-1 rounded-full">
-        {plan?.badge}
-      </span>
+    <div className="w-full">
+      <div className="relative ">
+        <div className="m-12 flex flex-row justify-center bg-indigo-100 border-t-8 border-b-0 border-blue-400 rounded-lg pt-8 p-12">
+          <div className="flex-1">
+            <h2 className="text-xl font-bold">{plan?.name}</h2>
 
-      <h2 className="text-xl font-bold">{plan?.name}</h2>
+            <p className="md:mt-2 text-green-600 font-medium">{plan?.offer}</p>
+            <div className="md:block flex justify-between">
+              <ul className="md:mt-6 space-y-2 text-gray-700">
+                {plan?.features.map((feature, i) => (
+                  <li key={i} className="flex items-center">
+                    <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="flex-1 flex justify-center items-center ">
+            <span className="font-bold text-4xl">r{plan?.price}</span>
+          </div>
 
-      <p className="md:mt-2 text-green-600 font-medium">{plan?.offer}</p>
-      <div className="md:block flex justify-between">
-        <ul className="md:mt-6 space-y-2 text-gray-700">
-          {plan?.features.map((feature, i) => (
-            <li key={i} className="flex items-center">
-              <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
-              {feature}
-            </li>
-          ))}
-        </ul>
+          <div className="absolute  bg-purple-600 bottom-2 rounded-lg hover:scale-105  ">
+            <button
+              onClick={() => {
+                if (plan?.price == undefined) {
+                  return;
+                }
+                // const price = plan.price
+                handlePaymentSuccess({
+                  razorpay_payment_id: "dummy_payment_id",
+                  razorpay_order_id: "dummy_order_id",      
+                });
+                // ProccedToPay(plan.price);
+              }}
+              disabled={!plan?.price}
+              className="pt-2 pb-2 p-8  font-semibold text-white "
+            >
+              procced to pay
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
+// Inside PaymentPage.tsx handler
+
+
+
+// const ProccedToPay = (plan: number) => {
+//   // const {mutate , loading} = useMutation({
+//   //   mutationKey:["ProccedToPay"]
+//   // })
+//   const timer = setInterval(() => console.log("procedd to pay"), 2000);
+//   useEffect(() => {
+//     clearInterval(timer);
+//   }, []);
+// };

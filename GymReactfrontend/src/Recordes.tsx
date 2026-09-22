@@ -1,79 +1,10 @@
-// import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import SomeThingWrongPage from "./someThingWrongPage";
 
-// const gymData = {
-//   deadlift: [
-//     { name: "John", weight: "250 kg" },
-//     { name: "Mike", weight: "240 kg" },
-//     { name: "Sarah", weight: "230 kg" },
-//     { name: "David", weight: "225 kg" },
-//     { name: "Emma", weight: "220 kg" },
-//   ],
-//   pushups: [
-//     { name: "Alex", reps: 150 },
-//     { name: "Chris", reps: 140 },
-//     { name: "Sophia", reps: 135 },
-//     { name: "Daniel", reps: 130 },
-//     { name: "Olivia", reps: 125 },
-//   ],
-// };
-
-// export default function GymRecords() {
-//   return (
-//     <div className="min-h-screen bg-gray-100 p-6">
-//       <h1 className="text-3xl font-bold text-center mb-8">🏋️ Gym Records</h1>
-
-//       <div className="grid md:grid-cols-2 gap-8">
-//         {/* Deadlift Section */}
-//         <div className="bg-white shadow-lg rounded-lg p-6">
-//           <h2 className="text-xl font-semibold mb-4 text-gray-800">
-//             Top 5 Deadlifts
-//           </h2>
-//           <ul className="space-y-3">
-//             {gymData.deadlift.map((member, index) => (
-//               <li
-//                 key={index}
-//                 className="flex justify-between items-center bg-gray-50 p-3 rounded-md shadow-sm"
-//               >
-//                 <span className="font-medium text-gray-700">
-//                   {index + 1}. {member.name}
-//                 </span>
-//                 <span className="text-indigo-600 font-bold">
-//                   {member.weight}
-//                 </span>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-
-//         {/* Pushups Section */}
-//         <div className="bg-white shadow-lg rounded-lg p-6">
-//           <h2 className="text-xl font-semibold mb-4 text-gray-800">
-//             Top 5 Pushups
-//           </h2>
-//           <ul className="space-y-3">
-//             {gymData.pushups.map((member, index) => (
-//               <li
-//                 key={index}
-//                 className="flex justify-between items-center bg-gray-50 p-3 rounded-md shadow-sm"
-//               >
-//                 <span className="font-medium text-gray-700">
-//                   {index + 1}. {member.name}
-//                 </span>
-//                 <span className="text-green-600 font-bold">
-//                   {member.reps} reps
-//                 </span>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-////
 import { useQuery } from "@tanstack/react-query";
 import axiosFetch from "./AxiosFetch";
-// import { useState } from "react";
+
 type Deadlift = {
   name: string;
   weight: string;
@@ -91,109 +22,30 @@ type RecordsProp = {
 type FetchingRecordsProp = {
   records: RecordsProp;
 };
-const gymData = {
-  deadlift: [
-    { name: "John", weight: "250 kg", date: "2026-05-12" },
-    { name: "Mike", weight: "240 kg", date: "2026-04-28" },
-    { name: "Sarah", weight: "230 kg", date: "2026-03-15" },
-    { name: "David", weight: "225 kg", date: "2026-02-20" },
-    { name: "Emma", weight: "220 kg", date: "2026-01-10" },
-  ],
-  pushups: [
-    { name: "Alex", reps: 150, date: "2026-05-18" },
-    { name: "Chris", reps: 140, date: "2026-04-30" },
-    { name: "Sophia", reps: 135, date: "2026-03-22" },
-    { name: "Daniel", reps: 130, date: "2026-02-25" },
-    { name: "Olivia", reps: 125, date: "2026-01-12" },
-  ],
-};
+
 
 export default function GymRecords() {
-  // const { data, isLoading, error } = useQuery<FetchingRecordsProp>({
-  //   queryKey: ["records"],
-  //   queryFn: () => axiosFetch("/records"),
-  // });
 
-  // if (error) {
-  //   return <div>something won</div>;
-  // }
-  // //  bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100
+
   return (
-    //  bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100
     <div className=" bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100  p-4 md:p-6 min-h-screen">
-      <h1 className="text-4xl font-extrabold text-center mb-10 text-gray-800">
+
+      <h1 className="md:text-2xl font-extrabold text-center mb-2 md:mb-8 text-gray-800">
         🏋️ Gym Records Board
       </h1>
-      <RecordesListBackend/>
-      {false && (
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* <RecordesListBackend /> */}
-          <RecordList />
-          {/* Pushups Section */}
-          <div className="bg-white shadow-xl rounded-xl p-4 md:p-6 hover:scale-[1.02] transition-transform">
-            <h2 className="text-2xl font-semibold mb-6 text-green-700 flex items-center">
-              🤸 Top 5 Pushups
-            </h2>
-            <ul className="space-y-4">
-              {gymData.pushups.map((member, index) => (
-                <li
-                  key={index}
-                  className="flex justify-between items-center bg-green-50 p-4 md:p-4 rounded-lg shadow-sm hover:bg-green-100 transition"
-                >
-                  <div>
-                    <span className="font-bold text-gray-800">
-                      {index + 1}. {member.name}
-                    </span>
-                    <p className="text-sm text-gray-500">
-                      Record set on {new Date(member.date).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <span className="text-green-600 font-extrabold text-lg">
-                    {member.reps} reps
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+      <div className="flex flex-col md:flex-row gap-2 overflow-x-scroll no-scrollbar">
+
+      <RecordesListBackend />
+
+      </div>
+
+    
     </div>
   );
 }
 
-const RecordList = () => {
-  return (
-    <div className="bg-white shadow-xl rounded-xl p-4 md:p-6 hover:scale-[1.02] transition-transform">
-      <h2 className="text-2xl font-semibold mb-6 text-indigo-700 flex items-center">
-        💪 Top 5 Deadlifts REcordssssssssssssssssss
-      </h2>
-      <ul className="space-y-4">
-        {gymData.deadlift.map((member, index) => (
-          <li
-            key={index}
-            className="flex justify-between items-center bg-indigo-50 p-2 md:p-4 rounded-lg shadow-sm hover:bg-indigo-100 transition"
-          >
-            <div>
-              <span className="font-bold text-gray-800">
-                {index + 1}. {member.name}
-              </span>
-              <p className="text-sm text-gray-500">
-                Record set on {new Date(member.date).toLocaleDateString()}
-              </p>
-            </div>
-            <span className="text-indigo-600 font-extrabold text-lg">
-              {member.weight}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 const RecordesListBackend = () => {
-  const { data, isLoading ,error} = useQuery<FetchingRecordsProp>({
+  const { data, isLoading, error } = useQuery<FetchingRecordsProp>({
     queryKey: ["records"],
     queryFn: () => axiosFetch("/records"),
   });
@@ -202,25 +54,29 @@ const RecordesListBackend = () => {
     // return <div> Record backend loading</div>
     return (
       <div>
-        {/* <Skeleton width={220} height={220}/> */}
+        
         <Sket />
+        <Sket />
+        <Sket />
+        <Sket />
+
       </div>
     );
   }
-  if(error){
-    return <div>something roee</div>
-  };
-  
+  if (error) {
+    return <SomeThingWrongPage func={() => axiosFetch("/records")} />;
+  }
+
   return (
-    <div className="bg-white shadow-xl rounded-xl p-6 hover:scale-[1.02] transition-transform">
-      <h2 className="text-2xl font-semibold mb-6 text-indigo-700 flex items-center">
-        💪 Top 5 Deadlifts records from backend
+    <div className="bg-white shadow-xl rounded-xl md:p-6 p-2 transition-transform shrink-0">
+      <h2 className="md:text-2xl text-xl font-semibold mb-4 text-indigo-700 flex items-center">
+        Top Deadlifts
       </h2>
-      <ul className="space-y-4">
+      <ul className="space-y-0 rounded-lg bg-indigo-50">
         {data?.records.deadlift.map((member, index) => (
           <li
             key={index}
-            className="flex justify-between items-center bg-indigo-50 p-4 rounded-lg shadow-sm hover:bg-indigo-100 transition"
+            className="flex justify-between items-center  p-2  shadow-sm  transition"
           >
             <div>
               <span className="font-bold text-gray-800">
@@ -229,7 +85,6 @@ const RecordesListBackend = () => {
               <p className="text-sm text-gray-500">
                 Record set on {new Date(member.date).toLocaleDateString()}
               </p>
-              <p className="text-gray-500">{member.date}opo</p>
             </div>
             <span className="text-indigo-600 font-extrabold text-lg">
               {member.weight}
@@ -241,6 +96,38 @@ const RecordesListBackend = () => {
   );
 };
 
+// const Records=(d:Deadlift[])=>{
+
+
+
+//   return (
+//     <div className="bg-white shadow-xl rounded-xl md:p-6 p-2 transition-transform shrink-0">
+//       <h2 className="md:text-2xl text-xl font-semibold mb-4 text-indigo-700 flex items-center">
+//         Top Deadlifts
+//       </h2>
+//       <ul className="space-y-0 rounded-lg bg-indigo-50">
+//         {d.map((member, index) => (
+//           <li
+//             key={index}
+//             className="flex justify-between items-center  p-2  shadow-sm  transition"
+//           >
+//             <div>
+//               <span className="font-bold text-gray-800">
+//                 {index + 1}. {member.name}
+//               </span>
+//               <p className="text-sm text-gray-500">
+//                 Record set on {new Date(member.date).toLocaleDateString()}
+//               </p>
+//             </div>
+//             <span className="text-indigo-600 font-extrabold text-lg">
+//               {member.weight}
+//             </span>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
 const Sket = () => {
   const Skett = () => {
     return (
@@ -267,3 +154,83 @@ const Sket = () => {
     </div>
   );
 };
+
+import { api } from "./Api";
+
+type Product = {
+  _id: string;
+  name: string;
+  category: string; // e.g. "Protein", "Creatine"
+  price: number;
+  image: string;
+  description: string;
+};
+
+const fetchProducts = async (): Promise<Product[]> => {
+  const { data } = await api.get("/products"); // backend endpoint
+  console.log("daat aaci", data.product);
+  return data.product;
+};
+
+export function GymProducts() {
+  const { data, isLoading, isError, error } = useQuery<Product[], Error>({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center  text-gray-600">
+        Loading products...
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-red-500">
+        {error.message}
+      </div>
+    );
+  }
+  if (data) {
+    console.log("product data", data);
+  }
+  return (
+    <div className="bg-gray-50 p-2 md:p-6">
+      <h1 className="text-xl font-bold text-indigo-700 mb-4 text-center">
+        Gym Products
+      </h1>
+
+      <div className="grid md:grid-cols-4 grid-cols-2 sm:grid-cols-3 gap-2 md:max-w-6xl mx-auto bg-red-400">
+        {data?.map((product) => (
+          <div
+            key={product._id}
+            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
+          >
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-36 object-cover"
+            />
+            <div className="p-2">
+            
+               <h2 className="md:text-lg text-x font-semibold text-gray-800 line-clamp-1">
+                {product.name}
+              </h2>
+       
+              <p className="text-sm text-gray-500 ">{product.category}</p>
+              <p className="text-indigo-600 font-bold">₹{product.price}</p>
+              <p className="text-gray-600 text-sm  line-clamp-1">
+                {product.description}
+              </p>
+              <button className="mt-2 w-full py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">
+                Add to Cart 
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

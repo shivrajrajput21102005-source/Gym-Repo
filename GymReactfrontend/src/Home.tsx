@@ -119,8 +119,8 @@ export default function PaymentPage() {
   //   </div>
   // }
   return (
-    <div className="min-h-screen bg-gray-400 flex flex-col overflow-hidden">
-      <div className={`bg-gray-400 `}>
+    <div className="min-h-screen ">
+      {/* <div className={`bg-gray-400  `}> */}
         {/* <div>
           {isLoading && (
             <div className="w-10 h-10 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
@@ -130,6 +130,7 @@ export default function PaymentPage() {
           )}
         </div> */}
         <GymRecords />
+        {/* <GymProducts/> */}
         {/* <HorizontalStepper/>  */}
 
         {user?.role==="admin" && (
@@ -152,7 +153,7 @@ export default function PaymentPage() {
             </div>
           </div>
         )}
-      </div>
+      {/* </div> */}
       {/* Header */}
       {/* <header className="w-full bg-white shadow px-6 py-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Payment Dashboard</h1>

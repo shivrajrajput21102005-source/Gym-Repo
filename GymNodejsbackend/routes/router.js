@@ -18,6 +18,7 @@ const addDays = (days) => {
 };
 import crypto from "crypto";
 import Razorpay from "razorpay";
+import { resolveObjectURL } from "buffer";
 // import GoogleUser from "../modules/realgoogleUser.js";
 const razorpay = new Razorpay({
   key_id: "rzp_test_SY9KTUPucXwHLj",
@@ -33,6 +34,7 @@ export const content = async (req, res) => {
   res.json({ ram: "content is here" });
 };
 router.get("/", async (req, res) => {
+  console.log("req, user", req.user);
   let user = await User.findById(req.user.id);
   // if (!user) {
   // const user = await GoogleUser.findById(req.user.id);
@@ -121,6 +123,7 @@ router.get("/filtermember", async (req, res) => {
     return;
   }
   const member = await Member.find({ name: { $regex: query, $options: "i" } });
+
   // const filteruser = user.filter((user) =>
   //   user.name.toLowerCase().includes(query),
   // );
@@ -221,7 +224,36 @@ router.get("/expiremembers", async (req, res) => {
   }
   res.json({ expireMembers });
 });
+router.post("/changepassword", async (req, es) => {
+  const { newPassword, oldPassword } = req.body;
+    console.log("1 p");
 
+  if (newPassword === undefined || oldPassword === undefined) {
+    console.log("11 p");
+    return res.status(404).json({ code: "PASSWORD_IS_REQUIRED" });
+  }
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    console.log("12 p");
+
+    return res.status(404).json({ code: "USER_NOT_FOUND" });
+  }
+  const compare = await bcrypt.compare(user.password, oldPassword);
+  if (!compare) {
+    console.log("13 p");
+
+    return res.status(404).json();
+  }
+  const hashpassword = await bcrypt.hash(newPassword, 10);
+  user.password = hashpassword;
+  console.log("14 p");
+
+  await user.save();
+  console.log("15 p");
+
+  return res.status(200).json({ success: true });
+  console.log("comparre pass", compare);
+});
 router.get("/data", data);
 router.get("/content", content);
 // const usera = async () => {
@@ -240,5 +272,10 @@ router.get("/content", content);
 // const m = useraapa.map((u) => console.log(u));
 // console.log("user", typeof useraa, useraa.email);
 // console.log("user", typeof User(), useraapa.length, fromEmail);
-console.log("after");
+console.log("after", process.env.PORT);
 export default router;
+
+// const valid = crypto.timingSafeEqual(
+//   Buffer.from(expectedsignature),
+//   Buffer.form(rozarpaysignature),
+// );

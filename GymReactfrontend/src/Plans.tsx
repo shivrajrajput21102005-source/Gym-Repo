@@ -172,13 +172,14 @@
 // }
 ///////////////////
 
-import React, { useState } from "react";
+import { useState } from "react";
 import UseFetch from "./UseFetch";
 import { useNavigate } from "react-router-dom";
+import { useCheckOut } from "./Context/CheckoutProvider";
 
-type ChoosePlanProp = {
-  choosePlanFunction?: React.Dispatch<React.SetStateAction<string | null>>;
-};
+// type ChoosePlanProp = {
+//   choosePlanFunction?: React.Dispatch<React.SetStateAction<string | null>>;
+// };
 
 export type AllPlans = {
   _id: string;
@@ -195,12 +196,12 @@ type FetchingProps = {
   allPlans: AllPlans[];
 };
 
-export default function GymPlans({ choosePlanFunction }: ChoosePlanProp) {
+export default function GymPlans() {
   const navigate = useNavigate();
+  const { setSelectedPlan } = useCheckOut();
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
     "monthly",
   );
-  const [selectedPlan, setSelectedPlan] = useState<AllPlans | null>(null);
 
   const { loading, data, error } = UseFetch<FetchingProps>(
     `/allPlans?q=${billingCycle}`,
@@ -208,8 +209,12 @@ export default function GymPlans({ choosePlanFunction }: ChoosePlanProp) {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen text-gray-600">
-        Loading plans...
+      <div className="flex flex-col justify-center items-center min-h-screen text-gray-600">
+        <div className="border-2 w-20 h-20  border-t-gray-300 border-blue-600 rounded-full animate-spin">
+
+        </div>
+      <p> Loading plans...
+        </p> 
       </div>
     );
   }
@@ -258,15 +263,9 @@ export default function GymPlans({ choosePlanFunction }: ChoosePlanProp) {
             plan={plan}
             price={plan.price}
             billingCycle={billingCycle}
-            selected={selectedPlan === plan}
             onSelect={() => {
               setSelectedPlan(plan);
-              if (choosePlanFunction) {
-                choosePlanFunction(plan._id);
-              }
-              if (selectedPlan) {
-                navigate(`/selectedplans/${selectedPlan._id}`);
-              }
+              navigate(`/selectedplans/${plan._id}`);
             }}
           />
         ))}
@@ -279,21 +278,15 @@ type PlanCardProps = {
   plan: AllPlans;
   price: number;
   billingCycle: "monthly" | "yearly";
-  selected: boolean;
+
   onSelect: () => void;
 };
 
-function PlanCard({
-  plan,
-  billingCycle,
-  price,
-  selected,
-  onSelect,
-}: PlanCardProps) {
+function PlanCard({ plan, billingCycle, price, onSelect }: PlanCardProps) {
   return (
     <div
       className={`relative rounded-2xl p-4 md:p-6 border shadow-sm transition transform
-        ${selected ? "border-indigo-500 bg-indigo-50 scale-105" : "border-gray-200 bg-white"}
+         hover:border-indigo-500 hover:bg-indigo-50 hover:scale-105 border-gray-200 bg-white
       `}
     >
       {/* Badge */}
@@ -320,11 +313,9 @@ function PlanCard({
           onClick={onSelect}
           className="md:mt-6 md:w-full md:py-2 px-2 h-10 text-nowrap rounded-lg font-semibold bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400"
         >
-          {selected ? "Selected" : "Get Started"}
+          Get Started
         </button>
       </div>
     </div>
   );
 }
-
-////////////////////

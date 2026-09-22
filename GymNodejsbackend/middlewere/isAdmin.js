@@ -1,8 +1,12 @@
-export const isadmin=(...roles)=>{
-    return(req,res,next)=>{
+export const isadmin = (roles) => {
+  return (req, res, next) => {
+    const { reqbody } = req.body;
+    const ishavrole = roles.some((role) => req.user.role.includes(role));
 
-if(!roles.includes(req.user.role)){
-    return res.status(400).json({code:"you are not admin lavde ke bal"})
-}
-next()
-}}
+    if (!ishavrole) {
+      return res.status(400).json({ code: "you are not admin lavde ke bal" });
+    }
+
+    next();
+  };
+};

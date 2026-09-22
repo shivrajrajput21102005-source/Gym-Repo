@@ -54,7 +54,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import http from "http";
-import { login, signUp, logout } from "./controller/login.js";
+import { login, signUp, logout, EmailVerifyCode } from "./controller/login.js";
 import User from "./modules/userModule.js";
 import { Socket } from "dgram";
 import morgan from "morgan";
@@ -68,7 +68,10 @@ import GoogleUser from "./modules/realgoogleUser.js";
 import AllPlans from "./modules/allPlansModule.js";
 import { declarPlans } from "./seedAllPlans.js";
 import { isadmin } from "./middlewere/isAdmin.js";
-import AdminRoute from "./routes/AdminRoutes.js";
+import adminRoutes from "./routes/AdminRoutes.js";
+import RequireGuest from "./RequireGuest.js";
+import payment from "./routes/paymentRoutes.js";
+import userRoute from "./routes/member.js";
 // import publicRoute from "./routes/publicRoute.js";
 // import Jwt from "jsonwebtoken";
 
@@ -99,18 +102,15 @@ app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    origin: "https://duopofitnessclubmanager.vercel.app",
+    // origin: "https://duopofitnessclubmanager.vercel.app",
     // origin: "http://localhost:1212",
-    // origin: true,
+    origin: true,
     credentials: true,
   }),
 );
 
 start();
-console.log("allplans documentos", await AllPlans.countDocuments());
 
-// app.use(cors());
-// app.use(bodyParser.json());
 const io = new Server(server, {
   cors: {
     origin: "https://duopofitnessclubmanager.vercel.app",
@@ -139,15 +139,24 @@ io.on("connection", (socket) => {
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_TESTID,
-  key_secret: RAZORPAY_SECRETKEY,
+  key_secret: process.env.RAZORPAY_SECRETKEY,
 });
 app.use("/user", isauthorized, router);
-app.use("/admin", isadmin, AdminRoute);
+// app.use("/u", isadmin(["admin", "user"]), adminuser);
+app.use("/a", isadmin(["admin"]), adminRoutes);
+app.use("/u", isadmin(["admin","user"]), userRoute);
+
+
+
+// app.use("/admin", AdminRoute);
+
+app.use("/payment", payment);
 app.use("/", publicRouter);
-app.post("/login", login);
-app.post("/signup", signUp);
+app.post("/login", RequireGuest, login);
+app.post("/signup", RequireGuest, signUp);
 app.post("/logout", logout);
-app.post("/auth/google", googleLogin);
+app.post("/auth/google", RequireGuest, googleLogin);
+app.post("/createaccount/verify-code", RequireGuest, EmailVerifyCode);
 // app.post("/create-order", async (req, res) => {
 //   // const { amount } = req.body;
 
@@ -163,32 +172,33 @@ app.post("/auth/google", googleLogin);
 //     res.json({ err });
 //   }
 // });
-// cldoof = --0
+
 async function hero() {
   const user = await User.find();
   console.log("user", user);
 }
 hero();
 async function lala() {
-  const lala = await GoogleUser.findById("69e9c605f24831d153e14472");
+  // const lala = await GoogleUser.findById("69e9c605f24831d153e14472");
+  const lala = await GoogleUser.find();
+
   console.log("lal", lala);
 }
 lala();
-async function lala2() {
-  // console.log("lala function ", process.env.PORT)
-  try {
-    const res = await fetch("https://api.resend.com/domains", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer re_j9UDg4pH_kiVVZvRxLpneQqG3wvvdrBsm",
-      },
-    });
-    console.log("resend lala", await res.text());
-    console.log("resend lala", res.status);
-  } catch (err) {
-    console.log("lala catch", err);
-  }
-}
+// async function lala2() {
+//   // console.log("lala function ", process.env.PORT)
+//   try {
+//     const res = await fetch("https://api.resend.com/domains", {
+//       method: "GET",
+//       headers: {
+//       },
+//     });
+//     console.log("resend lala", await res.text());
+//     console.log("resend lala", res.status);
+//   } catch (err) {
+//     console.log("lala catch", err);
+//   }
+// }
 // lala2();
 
 app.post("/updatepass", async (req, res) => {

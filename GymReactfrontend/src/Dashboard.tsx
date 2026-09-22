@@ -174,8 +174,8 @@
 // ...........
 import { useState } from "react";
 import { FaUser, FaHome, FaUsers, FaCreditCard } from "react-icons/fa";
-import { Menu, X } from "lucide-react";
-import { NavLink, Outlet, Link } from "react-router-dom";
+import { Menu,  X } from "lucide-react";
+import { NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 
 const UserLinks = ({ onLinkClick }: { onLinkClick: () => void }) => {
@@ -253,7 +253,7 @@ const SidebarNav = ({ onLinkClick }: { onLinkClick: () => void }) => {
         </NavLink>
       )}
       <NavLink
-        to="https://www.youtube.com"
+        to="/terms-and-conditions"
         onClick={onLinkClick}
         className={({ isActive }) =>
           isActive
@@ -263,8 +263,6 @@ const SidebarNav = ({ onLinkClick }: { onLinkClick: () => void }) => {
       >
         terms & seurity
       </NavLink>
-      <Link to="www.youtube.com">terms</Link>
-      <a href="www.youtube.com">go to </a>
     </nav>
   );
 };
@@ -273,9 +271,9 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-screen">
+    <div className="flex flex-col md:flex-row w-full h-screen">
       {/* Mobile Header */}
-      <div className="md:hidden ">
+      <header className="md:hidden ">
         <div className="flex justify-between items-center p-2">
           <div className="flex">
             <button onClick={() => setOpen(!open)} aria-label="Toggle Menu">
@@ -310,7 +308,7 @@ const Dashboard = () => {
         >
           <SidebarNav onLinkClick={() => setOpen(false)} />
         </div>
-      </div>
+      </header>
 
       {/* Desktop Sidebar */}
       <div className="hidden md:block bg-blue-100 w-[15%] h-screen">
@@ -319,12 +317,12 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div
-        className="flex-1 overflow-y-auto h-screen no-scrollbar"
+      <section
+        className="flex-1 overflow-y-auto no-scrollbar bg-center  bg-[url('./assets/Batman.jpg')]"
         onClick={() => setOpen(false)}
       >
         <Outlet />
-      </div>
+      </section>
     </div>
   );
 };

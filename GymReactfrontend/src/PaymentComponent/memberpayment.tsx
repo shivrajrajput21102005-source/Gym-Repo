@@ -3,11 +3,13 @@ import { api } from "../Api";
 import { useState } from "react";
 import Plan from "../Plans";
 import type {} from "globals";
-import type { SelectedProp } from "./payment";
+import {  type SelectedProp } from "./payment";
 type selectMemberProp = {
   selectMember: SelectedProp;
 };
+
 import UseFetch from "../UseFetch";
+import { useCheckOut } from "../Context/CheckoutProvider";
 // import { Heading1 } from "lucide-react";
 // import { dividerClasses } from "@mui/material/Divider";
 // import HandlePayment from "./HandlePayment";
@@ -22,7 +24,8 @@ type dataprop = {
   currency: string;
 };
 const memberpayment = ({ selectMember }: selectMemberProp) => {
-  const [choosePlan, setChoosePlan] = useState<string | null>(null);
+  // const [choosePlan, setChoosePlan] = useState<string | null>(null);
+  const { selectedPlan } = useCheckOut();
   const [paymentData, setPaymentData] = useState<dataprop | null>(null);
   const [posting, setPosting] = useState(false);
   const { loading, data, error } = UseFetch(
@@ -75,22 +78,21 @@ const memberpayment = ({ selectMember }: selectMemberProp) => {
   return (
     <div>
       <div>
-        <h1>{selectMember.name} </h1>
+        <h1>{selectMember.name} nmma </h1>
         <div>
           {data?.ishaveplan ? (
             <h1>{data?.ishaveplan.price}</h1>
           ) : (
             <div>
-              <h1>{choosePlan}</h1>
-              <Plan choosePlanFunction={setChoosePlan} />
+              <Plan />
             </div>
           )}
         </div>
         <div className="fixed top-24">
-          {choosePlan && (
+          {selectedPlan && (
             // <HandlePayment/>
             <button
-              onClick={() => getMemberShip(selectMember.id, choosePlan)}
+              onClick={() => getMemberShip(selectMember.id, selectedPlan._id)}
               className="bg-green-500 py-2 px-4"
             >
               {posting ? "load" : "Get Membership"}

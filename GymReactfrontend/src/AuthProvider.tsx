@@ -27,8 +27,13 @@ type loginReturnProp = {
   success: boolean;
   message: string | null;
 };
+type SignUpReturnProp = {
+  success: boolean;
+  message?: string | null;
+  verifyId?: string;
+};
 type loginProp = (cradiental: loginParaProp) => Promise<loginReturnProp>;
-type signup = (cr: CR) => Promise<loginReturnProp>;
+type signup = (cr: CR) => Promise<SignUpReturnProp>;
 type logoutProp = () => Promise<loginReturnProp>;
 
 type AuthContextProp = {
@@ -98,16 +103,19 @@ export const AuthProvider = ({ children }: AuthProviderProp) => {
   const signup: signup = async (cr) => {
     try {
       const res = await api.post("/signup", cr, { withCredentials: true });
-      setUser(res.data.user);
+      // setUser(res.data.user);
       console.log("signup2", user);
+      console.log("signup res fdata authprovider", res.data);
 
-      return { success: true, message: "signupsucess" };
+      return {
+        success: true,
+        message: "signupsucess",
+        verifyId: res.data.verifyId,
+      };
     } catch (err: any) {
       // if (err.responce) {
-      throw {
-        success: false,
-        message: err.response.data.code,
-      };
+      console.log("signup erro suth",err)
+      throw  err;
       // }
       // else {
       //   return { success: false, message: "Network Error Try again" };

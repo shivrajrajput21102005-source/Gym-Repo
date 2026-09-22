@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 
 export const Loading = () => {
   const items = Array.from({ length: 10 });
@@ -154,6 +154,13 @@ export const Pulse = () => {
   );
 };
 
+export const Loader = () => {
+  return (
+    <div className="w-full h-full bg-white z-10 flex justify-center items-center">
+      <div className="w-10 h-10 md:w-20 md:h-20 rounded-full animate-spin border-t-blue-600 md:border-4 border-2 border-gray-300"></div>
+    </div>
+  );
+};
 // export const L = () => {
 //   const [closetindex, st] = useState(0);
 //   const babuRef = useRef<HTMLDivElement>(null);
@@ -179,7 +186,7 @@ export const Pulse = () => {
 //   console.log("rerender");
 
 //   const onScroll = () => {
-  
+
 //     let c = babuRef.current;
 //     const scrooby = i.length * ITEM_WIDTH;
 //     if (!c) {
@@ -206,7 +213,7 @@ export const Pulse = () => {
 //       const childCenter = child?.left + child?.width / 2;
 //       const parentCenter = center.left + center.width / 2;
 //       const distance = Math.abs(parentCenter - childCenter);
- 
+
 //       if (distance < counry) {
 //         counry = distance;
 //         closest = index;
@@ -218,7 +225,6 @@ export const Pulse = () => {
 //       st(closest);
 //     }
 //   };
-
 
 //   return (
 //     <>
@@ -240,7 +246,6 @@ export const Pulse = () => {
 //           );
 //         })}
 //       </div>
-
 
 //     </>
 //   );

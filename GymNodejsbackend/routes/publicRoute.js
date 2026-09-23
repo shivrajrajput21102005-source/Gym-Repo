@@ -1,5 +1,5 @@
 import AllPlans from "../modules/allPlansModule.js";
-import { Router } from "express";
+import express,{ Router } from "express";
 import { product } from "../seedAllPlans.js";
 import nodemailer from "nodemailer";
 import { randomUUID } from "crypto";

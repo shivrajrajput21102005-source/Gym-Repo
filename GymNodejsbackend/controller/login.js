@@ -1,7 +1,7 @@
 import User from "../modules/userModule.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { transporter } from "/EmailTransporter.js";
+import { transporter } from "../services/EmailTransporter.js";
 import { randomUUID } from "crypto";
 import { randomBytes, randomFill, randomFillSync, randomInt } from "crypto";
 import Verification from "../modules/verifycode.js";

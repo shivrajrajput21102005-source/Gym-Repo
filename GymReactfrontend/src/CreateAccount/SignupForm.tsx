@@ -40,7 +40,7 @@ const SignUpForm = () => {
 
   return (
     <>
-      <div className="w-full mt-12 flex justify-center  bg-red-900">
+      <div className="w-full mt-12 flex justify-center ">
         <div className="py-2 px-4 bg-white  shadow-2xl  w-screen max-w-md rounded-lg ">
           <h1 className=" w-full text-center text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent ">
             Duopofitnessclub

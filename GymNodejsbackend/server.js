@@ -1,10 +1,12 @@
+// import dotenv from "dotenv";
+// const result = dotenv.config();
+// console.log("result ", result);
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
 import router from "./routes/router.js";
 import publicRouter from "./routes/publicRoute.js";
+import Member from "./modules/MemberModule.js";
 import bcrypt from "bcryptjs";
 import isauthorized from "./isAuthorized.js";
 import ConnectDB from "./db.js";
@@ -30,12 +32,15 @@ import adminRoutes from "./routes/AdminRoutes.js";
 import RequireGuest from "./RequireGuest.js";
 import payment from "./routes/paymentRoutes.js";
 import userRoute from "./routes/member.js";
+import Verification from "./modules/verifycode.js";
 // import publicRoute from "./routes/publicRoute.js";
 // import Jwt from "jsonwebtoken";
 
+console.log("server on express ");
 // ConnectDB();
+
 const app = express();
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 const server = http.createServer(app);
 const PORT = process.env.PORT | 5000;
 // ConnectDB().then(() => {
@@ -43,6 +48,19 @@ const PORT = process.env.PORT | 5000;
 //     console.log("server run on the ", PORT);
 //   });
 // });
+const create = async () => {
+  const existing = await AllPlans.countDocuments();
+  const existing2 = await User.countDocuments();
+  const existing3 = await Member.countDocuments();
+  const existing4 = await Verification.countDocuments();
+  const existing5 = await GoogleUser.countDocuments();
+
+  console.log("admins signup successfully ALLplans", existing);
+  console.log("admins signup successfully User", existing2);
+  console.log("admins signup successfully Member", existing3);
+  console.log("admins signup successfully Verification", existing4);
+  console.log("admins signup successfully googleUser", existing5);
+};
 const start = async () => {
   try {
     await ConnectDB();
@@ -53,14 +71,13 @@ const start = async () => {
     console.log("err in start", err);
   }
 };
-declarPlans();
 app.use(express.json());
 // app.use(cors());
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    // origin: "https://duopofitnessclubmanager.vercel.app",
+    origin: "https://duopofitnessclubmanager.vercel.app",
     // origin: "http://localhost:1212",
     origin: true,
     credentials: true,
@@ -68,6 +85,7 @@ app.use(
 );
 
 start();
+// declarPlans();
 
 const io = new Server(server, {
   cors: {
@@ -93,18 +111,24 @@ io.on("connection", (socket) => {
   });
 });
 
+console.log(
+  "url pathname before",
+  process.env.MONGO_DB_NAME,
+  process.env.MONGO_URI,
+);
+
+// const url = new URL(process.env.MONGO_URL);
+// console.log("url pathname", process.env.MONGO_URL, url);
 ///Razorpay
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_TESTID,
-  key_secret: process.env.RAZORPAY_SECRETKEY,
-});
+// const razorpay = new Razorpay({
+//   key_id: process.env.RAZORPAY_TESTID,
+//   key_secret: process.env.RAZORPAY_SECRETKEY,
+// });
 app.use("/user", isauthorized, router);
 // app.use("/u", isadmin(["admin", "user"]), adminuser);
 app.use("/a", isadmin(["admin"]), adminRoutes);
-app.use("/u", isadmin(["admin","user"]), userRoute);
-
-
+app.use("/u", isadmin(["admin", "user"]), userRoute);
 
 // app.use("/admin", AdminRoute);
 
@@ -135,14 +159,14 @@ async function hero() {
   const user = await User.find();
   console.log("user", user);
 }
-hero();
+// hero();
 async function lala() {
   // const lala = await GoogleUser.findById("69e9c605f24831d153e14472");
   const lala = await GoogleUser.find();
 
   console.log("lal", lala);
 }
-lala();
+// lala();
 // async function lala2() {
 //   // console.log("lala function ", process.env.PORT)
 //   try {
@@ -192,6 +216,7 @@ const createAdmin = async () => {
     console.log("admins signup successfully");
   }
 };
+
 // createAdmin();
 // llpopo.ar =
 // const end = async ()=>{

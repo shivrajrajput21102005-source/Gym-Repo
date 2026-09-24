@@ -226,7 +226,7 @@ router.get("/expiremembers", async (req, res) => {
 });
 router.post("/changepassword", async (req, es) => {
   const { newPassword, oldPassword } = req.body;
-    console.log("1 p");
+  console.log("1 p");
 
   if (newPassword === undefined || oldPassword === undefined) {
     console.log("11 p");
@@ -272,7 +272,8 @@ router.get("/content", content);
 // const m = useraapa.map((u) => console.log(u));
 // console.log("user", typeof useraa, useraa.email);
 // console.log("user", typeof User(), useraapa.length, fromEmail);
-console.log("after", process.env.PORT);
+console.log("after", process.env.MONGO_URI);
+
 export default router;
 
 // const valid = crypto.timingSafeEqual(

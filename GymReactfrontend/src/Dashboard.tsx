@@ -318,7 +318,7 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <section
-        className="flex-1 overflow-y-auto no-scrollbar bg-center  bg-[url('./assets/Batman.jpg')]"
+        className="flex-1 overflow-y-auto no-scrollbar bg-center]"
         onClick={() => setOpen(false)}
       >
         <Outlet />

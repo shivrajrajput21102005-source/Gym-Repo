@@ -1,11 +1,11 @@
-import dotenv from "dotenv";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const result = dotenv.config({ path: path.join(__dirname + "/.env") });
-console.log(result);
-console.log("basic js", process.env.EMAIL_PASS, process.env.PORT);
+// import dotenv from "dotenv";
+// import path, { dirname } from "path";
+// import { fileURLToPath } from "url";
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// const result = dotenv.config({ path: path.join(__dirname + "/.env") });
+// console.log(result);
+// console.log("basic js", process.env.EMAIL_PASS, process.env.PORT);
 
 // const a = "lalali";
 // const b = "ilaall";

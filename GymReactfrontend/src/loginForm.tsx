@@ -64,10 +64,10 @@ if(form.password==""){
   };
  
   return (
-    <div className="w-full flex justify-center mt-12">
+    <div className="w-full flex justify-center md:mt-12 mt-8">
       <div className="w-full max-w-md ">
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 space-y-6">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 md:space-y-6 space-y-2">
           {/* Header */}
           <div className="text-center space-y-2">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -75,7 +75,7 @@ if(form.password==""){
             </h1>
             <p className="text-gray-500">Sign in to your account</p>
           </div>
-          <div className="h-8  flex items-end justify-center">
+          <div className="md:h-8 h-4 flex items-end justify-center">
             {error && (
               <p className="text-red-500 text-sm font-semibold">
                 login failed !, Try again 

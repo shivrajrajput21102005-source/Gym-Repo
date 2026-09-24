@@ -20,7 +20,6 @@ import Verifycode from "./Verifycode";
 // import { useAuth } from "./AuthProvider";
 import ProtectedRoute from "./Meddlewere.For.Routes/ProtectedRoute";
 import Dashboard from "./Dashboard";
-import PublicRoutes from "./Meddlewere.For.Routes/PublicRoutes";
 import Profile from "./Profile";
 import Createposts from "./Createposts";
 // import Chat from "./chat";
@@ -33,6 +32,7 @@ import ForgotePassword from "./ForgotePassword";
 // import NetworkStatus from "./NetworkStatus";
 import VerifyCodeForSignUp from "./CreateAccount/VerifyCodeForSignUp";
 import LoginRoutes from "./Meddlewere.For.Routes/LoginRoutes";
+import SomeThingWrongPage from "./someThingWrongPage";
 function App() {
   const [appReady, setAppReady] = useState(false);
   // const isOnLine = NetworkStatus();
@@ -85,27 +85,25 @@ function App() {
             <Route path="/verifycode" element={<VerifyCodeForSignUp />}></Route>
           </Route>
           <Route path="/" element={<Dashboard />}>
-            <Route element={<PublicRoutes />}>
-              {/* <div className="flex justify-center"> */}
-            </Route>
+            
 
             <Route path="/" element={<Home />}></Route>
-            <Route
-              path="/selectedplans/:id"
-              element={<SelectedPlans />}
-            ></Route>
             <Route path="/plans" element={<Plans />}></Route>
             {/* </div> */}
             <Route
               path="/terms-and-conditions"
               element={<TermsAndConditions />}
             ></Route>
-            <Route path="/s" element={<Subscription />}></Route>
             {/* <Route
               path="/s/:orderid/paymentprocessing"
               element={<Process />}
-            ></Route> */}
+              ></Route> */}
             <Route element={<ProtectedRoute />}>
+              <Route
+                path="/selectedplans/:id"
+                element={<SelectedPlans />}
+              ></Route>
+              <Route path="/s" element={<Subscription />}></Route>
               <Route
                 path="/home/membership/:name"
                 element={<HomeMemberMemberShipshow />}
@@ -126,6 +124,10 @@ function App() {
               ></Route>
               <Route path="/profile/logout" element={<Logout />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
+              <Route
+                path="/cart"
+                element={<SomeThingWrongPage func={() => {}} />}
+              ></Route>
               {/* <Route path="/chats" element={<Chat />}></Route> */}
 
               <Route path="/createpost" element={<Createposts />}></Route>

@@ -3,9 +3,9 @@ import AllPlans from "./modules/allPlansModule.js";
 // ConnectDB();
 
 export const declarPlans = async () => {
-
-  if ((await AllPlans.countDocuments()) == 0) {
-
+  // if (await AllPlans.countDocuments() === 0) {
+  console.log("seed plans", AllPlans.db.name, AllPlans.db.readyState);
+  if (await AllPlans.countDocuments() == 0) {
     await AllPlans.insertMany([
       {
         name: "Starter",
@@ -15,6 +15,16 @@ export const declarPlans = async () => {
         offer: "Perfect for beginners",
         badge: "Entry",
         features: ["Cardio zone", "Locker facility"],
+        is_active: true,
+      },
+      {
+        name: "Student",
+        price: 799,
+        plan_type: "monthly",
+        duration: "1 month",
+        offer: "Discounted for students",
+        badge: "Youth",
+        features: ["Flexible timings", "Study-friendly schedule"],
         is_active: true,
       },
       {
@@ -52,6 +62,16 @@ export const declarPlans = async () => {
         is_active: true,
       },
       {
+        name: "Couple",
+        price: 3499,
+        plan_type: "monthly",
+        duration: "1 month",
+        offer: "For 2 members",
+        badge: "Duo",
+        features: ["Shared trainer", "Couple yoga sessions"],
+        is_active: true,
+      },
+      {
         name: "Premium",
         price: 4999,
         plan_type: "monthly",
@@ -73,26 +93,6 @@ export const declarPlans = async () => {
         is_active: true,
       },
       {
-        name: "Student",
-        price: 799,
-        plan_type: "monthly",
-        duration: "1 month",
-        offer: "Discounted for students",
-        badge: "Youth",
-        features: ["Flexible timings", "Study-friendly schedule"],
-        is_active: true,
-      },
-      {
-        name: "Couple",
-        price: 3499,
-        plan_type: "monthly",
-        duration: "1 month",
-        offer: "For 2 members",
-        badge: "Duo",
-        features: ["Shared trainer", "Couple yoga sessions"],
-        is_active: true,
-      },
-      {
         name: "Family",
         price: 7499,
         plan_type: "monthly",
@@ -110,6 +110,17 @@ export const declarPlans = async () => {
         offer: "Perfect for beginners",
         badge: "Entry",
         features: ["Cardio zone", "Locker facility"],
+        is_active: true,
+      },
+      {
+        name: "Student",
+        price: 6999,
+        plan_type: "yearly",
+        duration: "12 months",
+
+        offer: "Discounted for students",
+        badge: "Youth",
+        features: ["Flexible timings", "Study-friendly schedule"],
         is_active: true,
       },
       {
@@ -168,17 +179,6 @@ export const declarPlans = async () => {
         is_active: true,
       },
       {
-        name: "Student",
-        price: 6999,
-        plan_type: "yearly",
-        duration: "12 months",
-
-        offer: "Discounted for students",
-        badge: "Youth",
-        features: ["Flexible timings", "Study-friendly schedule"],
-        is_active: true,
-      },
-      {
         name: "Couple",
         price: 30999,
         plan_type: "yearly",
@@ -204,51 +204,80 @@ export const declarPlans = async () => {
 };
 // declarPlans();
 
-export const product  =  [
-    {
-      "_id": "1",
-      "name": "Whey Protein Isolate",
-      "category": "Protein",
-      "price": 2999,
-      "image": "https://example.com/images/whey-protein.jpg",
-      "description": "High-quality whey protein isolate for muscle recovery and growth.",
-      "stock": 50
-    },
-    {
-      "_id": "2",
-      "name": "Creatine Monohydrate",
-      "category": "Creatine",
-      "price": 1499,
-      "image": "https://example.com/images/creatine.jpg",
-      "description": "Pure creatine monohydrate to boost strength and performance.",
-      "stock": 100
-    },
-    {
-      "_id": "3",
-      "name": "Mass Gainer",
-      "category": "Protein",
-      "price": 3499,
-      "image": "https://example.com/images/mass-gainer.jpg",
-      "description": "Calorie-dense formula for bulking and muscle gain.",
-      "stock": 30
-    },
-    {
-      "_id": "4",
-      "name": "BCAA Powder",
-      "category": "Supplement",
-      "price": 1999,
-      "image": "https://example.com/images/bcaa.jpg",
-      "description": "Branched-chain amino acids to reduce fatigue and improve recovery.",
-      "stock": 75
-    },
-    {
-      "_id": "5",
-      "name": "Pre-Workout Formula",
-      "category": "Supplement",
-      "price": 2499,
-      "image": "https://example.com/images/preworkout.jpg",
-      "description": "Energy-boosting pre-workout blend with caffeine and beta-alanine.",
-      "stock": 40
-    }
-  ]
-
+export const product = [
+  {
+    _id: "1",
+    name: "Whey Protein Isolate",
+    category: "Protein",
+    price: 2999,
+    image: "uploads/whey.jpg",
+    description:
+      "High-quality whey protein isolate for muscle recovery and growth.",
+    stock: 50,
+  },
+  {
+    _id: "2",
+    name: "Creatine Monohydrate",
+    category: "Creatine",
+    price: 1499,
+    image: "uploads/creatinemonohydrate.webp",
+    description: "Pure creatine monohydrate to boost strength and performance.",
+    stock: 100,
+  },
+  {
+    _id: "3",
+    name: "Mass Gainer",
+    category: "Protein",
+    price: 3499,
+    image: "uploads/massgainer.webp",
+    description: "Calorie-dense formula for bulking and muscle gain.",
+    stock: 30,
+  },
+  {
+    _id: "4",
+    name: "BCAA Powder",
+    category: "Supplement",
+    price: 1999,
+    image: "uploads/musclegears.webp",
+    description:
+      "Branched-chain amino acids to reduce fatigue and improve recovery.",
+    stock: 75,
+  },
+  {
+    _id: "5",
+    name: "Pre-Workout Formula",
+    category: "Supplement",
+    price: 2499,
+    image: "uploads/pre-workout.jpg ",
+    description:
+      "Energy-boosting pre-workout blend with caffeine and beta-alanine.",
+    stock: 40,
+  },
+  {
+    _id: "6",
+    name: "Creatine Monohydrate",
+    category: "Creatine",
+    price: 1399,
+    image: "uploads/creatine.webp",
+    description: "Pure creatine monohydrate to boost strength and performance.",
+    stock: 100,
+  },
+  {
+    _id: "7",
+    name: "Mass Gainer",
+    category: "Protein",
+    price: 3299,
+    image: "uploads/massgainer.jpg",
+    description: "Muscle gain and fast recovery.",
+    stock: 30,
+  },
+  {
+    _id: "7",
+    name: "Protein",
+    category: "Protein",
+    price: 1499,
+    image: "uploads/protein.webp",
+    description: "Muscle gain and fast recovery.",
+    stock: 30,
+  },
+];

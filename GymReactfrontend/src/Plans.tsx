@@ -176,6 +176,7 @@ import { useState } from "react";
 import UseFetch from "./UseFetch";
 import { useNavigate } from "react-router-dom";
 import { useCheckOut } from "./Context/CheckoutProvider";
+import SomeThingWrongPage from "./someThingWrongPage";
 
 // type ChoosePlanProp = {
 //   choosePlanFunction?: React.Dispatch<React.SetStateAction<string | null>>;
@@ -220,9 +221,7 @@ export default function GymPlans() {
   }
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-screen text-red-500">
-        {error.message}
-      </div>
+      <SomeThingWrongPage func={()=>{}}/>
     );
   }
 

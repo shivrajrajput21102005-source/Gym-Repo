@@ -16,8 +16,11 @@ type pushups = {
   date: string;
 };
 type RecordsProp = {
-  deadlift: Deadlift[];
-  pushups: pushups[];
+  deadlift?: Deadlift[];
+  pushups?: pushups[];
+  pullups?: pushups[];
+  squats?: pushups[];
+
 };
 type FetchingRecordsProp = {
   records: RecordsProp;
@@ -25,33 +28,11 @@ type FetchingRecordsProp = {
 
 
 export default function GymRecords() {
-
-
-  return (
-    <div className=" bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100  p-4 md:p-6 min-h-screen">
-
-      <h1 className="md:text-2xl font-extrabold text-center mb-2 md:mb-8 text-gray-800">
-        🏋️ Gym Records Board
-      </h1>
-      <div className="flex flex-col md:flex-row gap-2 overflow-x-scroll no-scrollbar">
-
-      <RecordesListBackend />
-
-      </div>
-
-    
-    </div>
-  );
-}
-
-const RecordesListBackend = () => {
-  const { data, isLoading, error } = useQuery<FetchingRecordsProp>({
+ const { data, isLoading, error } = useQuery<FetchingRecordsProp>({
     queryKey: ["records"],
     queryFn: () => axiosFetch("/records"),
   });
-  console.log("records", data?.records.deadlift);
-  if (isLoading) {
-    // return <div> Record backend loading</div>
+    if (isLoading) {
     return (
       <div>
         
@@ -68,12 +49,37 @@ const RecordesListBackend = () => {
   }
 
   return (
+    <div className=" bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100  p-4 md:p-6 min-h-screen">
+
+      <h1 className="md:text-2xl font-extrabold text-center mb-2 md:mb-8 text-gray-800">
+        🏋️ Gym Records Board
+      </h1>
+      <div className="flex flex-col md:flex-row gap-2 overflow-x-scroll no-scrollbar">
+
+      <RecordesOfDeadLift deadlift={data?.records?.deadlift!} />
+      <Recordesofpullups pullups={data?.records?.pullups!} />
+      <RecordsBackend pushups={data?.records?.pushups!} />
+      <Recordesofsquats squats={data?.records?.squats!} />
+      
+
+      </div>
+
+    
+    </div>
+  );
+}
+
+const RecordesOfDeadLift = ({deadlift}:RecordsProp) => {
+ 
+
+
+  return (
     <div className="bg-white shadow-xl rounded-xl md:p-6 p-2 transition-transform shrink-0">
       <h2 className="md:text-2xl text-xl font-semibold mb-4 text-indigo-700 flex items-center">
         Top Deadlifts
       </h2>
       <ul className="space-y-0 rounded-lg bg-indigo-50">
-        {data?.records.deadlift.map((member, index) => (
+        {deadlift?.map((member, index) => (
           <li
             key={index}
             className="flex justify-between items-center  p-2  shadow-sm  transition"
@@ -95,7 +101,103 @@ const RecordesListBackend = () => {
     </div>
   );
 };
+const RecordsBackend = ({pushups}:RecordsProp) => {
+ 
 
+
+  return (
+    <div className="bg-white shadow-xl rounded-xl md:p-6 p-2 transition-transform shrink-0">
+      <h2 className="md:text-2xl text-xl font-semibold mb-4 text-indigo-700 flex items-center">
+        Pushups 
+      </h2>
+      <ul className="space-y-0 rounded-lg bg-indigo-50">
+        {pushups?.map((member, index) => (
+          <li
+            key={index}
+            className="flex justify-between items-center  p-2  shadow-sm  transition"
+          >
+            <div>
+              <span className="font-bold text-gray-800">
+                {index + 1}. {member.name}
+              </span>
+              <p className="text-sm text-gray-500">
+                Record set on {new Date(member.date).toLocaleDateString()}
+              </p>
+            </div>
+            <span className="text-indigo-600 font-extrabold text-lg">
+              {member.reps} reps
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const Recordesofpullups = ({pullups}:RecordsProp) => {
+ 
+
+
+  return (
+    <div className="bg-white shadow-xl rounded-xl md:p-6 p-2 transition-transform shrink-0">
+      <h2 className="md:text-2xl text-xl font-semibold mb-4 text-indigo-700 flex items-center">
+        Pullups 
+      </h2>
+      <ul className="space-y-0 rounded-lg bg-indigo-50">
+        {pullups?.map((member, index) => (
+          <li
+            key={index}
+            className="flex justify-between items-center  p-2  shadow-sm  transition"
+          >
+            <div>
+              <span className="font-bold text-gray-800">
+                {index + 1}. {member.name}
+              </span>
+              <p className="text-sm text-gray-500">
+                Record set on {new Date(member.date).toLocaleDateString()}
+              </p>
+            </div>
+            <span className="text-indigo-600 font-extrabold text-lg">
+              {member.reps} reps
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+const Recordesofsquats = ({squats}:RecordsProp) => {
+ 
+
+
+  return (
+    <div className="bg-white shadow-xl rounded-xl md:p-6 p-2 transition-transform shrink-0">
+      <h2 className="md:text-2xl text-xl font-semibold mb-4 text-indigo-700 flex items-center">
+        Squats 
+      </h2>
+      <ul className="space-y-0 rounded-lg bg-indigo-50">
+        {squats?.map((member, index) => (
+          <li
+            key={index}
+            className="flex justify-between items-center  p-2  shadow-sm  transition"
+          >
+            <div>
+              <span className="font-bold text-gray-800">
+                {index + 1}. {member.name}
+              </span>
+              <p className="text-sm text-gray-500">
+                Record set on {new Date(member.date).toLocaleDateString()}
+              </p>
+            </div>
+            <span className="text-indigo-600 font-extrabold text-lg">
+              {member.reps} reps
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 // const Records=(d:Deadlift[])=>{
 
 
@@ -155,7 +257,8 @@ const Sket = () => {
   );
 };
 
-import { api } from "./Api";
+import { api, BASEURL } from "./Api";
+import {  useNavigate } from "react-router-dom";
 
 type Product = {
   _id: string;
@@ -173,6 +276,7 @@ const fetchProducts = async (): Promise<Product[]> => {
 };
 
 export function GymProducts() {
+  const navigate =useNavigate()
   const { data, isLoading, isError, error } = useQuery<Product[], Error>({
     queryKey: ["products"],
     queryFn: fetchProducts,
@@ -197,19 +301,19 @@ export function GymProducts() {
     console.log("product data", data);
   }
   return (
-    <div className="bg-gray-50 p-2 md:p-6">
-      <h1 className="text-xl font-bold text-indigo-700 mb-4 text-center">
+    <div className=" bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 p-2 md:p-6 border-t-2 border-gray-50">
+      <h1 className="text-xl font-bold text-orange-400 mb-4">
         Gym Products
       </h1>
 
-      <div className="grid md:grid-cols-4 grid-cols-2 sm:grid-cols-3 gap-2 md:max-w-6xl mx-auto bg-red-400">
+      <div className="grid md:grid-cols-4 grid-cols-2 sm:grid-cols-3 gap-2 md:max-w-6xl mx-auto">
         {data?.map((product) => (
           <div
             key={product._id}
             className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
           >
             <img
-              src={product.image}
+              src={`${BASEURL}/${product.image}`}
               alt={product.name}
               className="w-full h-36 object-cover"
             />
@@ -224,7 +328,7 @@ export function GymProducts() {
               <p className="text-gray-600 text-sm  line-clamp-1">
                 {product.description}
               </p>
-              <button className="mt-2 w-full py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700">
+              <button className="mt-2 w-full py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700" onClick={()=>navigate("/cart")}>
                 Add to Cart 
               </button>
             </div>

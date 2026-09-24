@@ -32,32 +32,32 @@ publicRoute.get("/allPlans", async (req, res) => {
 
 const records = {
   deadlift: [
-    { name: "Rahul Tej", weight: "250 kg" },
-    { name: "Pratyakhsha Singh", weight: "240 kg" },
-    { name: "Sohil Khan", weight: "230 kg" },
-    { name: "Babu", weight: "225 kg" },
-    { name: "Vikash Yadav", weight: "220 kg" },
+    { name: "Rahul Tej", weight: "250 kg",date:"2025-12-22" },
+    { name: "Pratyakhsha Singh", weight: "240 kg" ,date:"2026-01-09"},
+    { name: "Sohil Khan", weight: "230 kg",date:"2026-01-02" },
+    { name: "Babu", weight: "225 kg",date:"2025-12-29" },
+    { name: "Vikash Yadav", weight: "220 kg",date:"2025-12-02" },
   ],
   pushups: [
-    { name: "Aaman Patola", reps: 150 },
-    { name: "Somya kumar", reps: 140 },
-    { name: "Sopen ", reps: 135 },
-    { name: "Daksha", reps: 130 },
-    { name: "Naman Sharma", reps: 125 },
+    { name: "Aaman Patola", reps: 1407,date:"2025-12-21" },
+    { name: "Somya kumar", reps: 1239,date:"2025-12-24" },
+    { name: "Sopen ", reps: 1000 ,date:"2025-12-24"},
+    { name: "Daksha", reps: 890,date:"2026-12-02" },
+    { name: "Naman Sharma", reps: 880,date:"2026-12-12" },
   ],
   pullups: [
-    { name: "Rohan", reps: 150 },
-    { name: "Prince", reps: 140 },
-    { name: "Soden", reps: 135 },
-    { name: "Danu", reps: 130 },
-    { name: "Om", reps: 125 },
+    { name: "Rohan", reps: 150,date:"2026-05-20" },
+    { name: "Prince", reps: 140,date:"2026-02-21" },
+    { name: "Soden", reps: 135 ,date:"2026-02-09"},
+    { name: "Danu", reps: 130,date:"2026-02-13" },
+    { name: "Om", reps: 125 ,date:"2026-02-22"},
   ],
-  op: [
-    { name: "Alex", reps: 150 },
-    { name: "Chris", reps: 140 },
-    { name: "Sophia", reps: 135 },
-    { name: "Daniel", reps: 130 },
-    { name: "Olivia", reps: 125 },
+  squats: [
+    { name: "Alex", reps: 150,date:"2026-07-02" },
+    { name: "Chris", reps: 140 ,date:"2026-02-08"},
+    { name: "Sophia", reps: 135,date:"2026-02-08" },
+    { name: "Daniel", reps: 130 ,date:"2025-10-22"},
+    { name: "Olivia", reps: 125 ,date:"2026-01-29"},
   ],
 };
 

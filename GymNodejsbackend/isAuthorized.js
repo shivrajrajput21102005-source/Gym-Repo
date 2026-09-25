@@ -22,12 +22,18 @@ const isauthorized = async (req, res, next) => {
     console.log("auth decorded", decorded);
     const user = await User.findById(decorded.id);
     console.log("auth user", user);
-    if (!user) {
+    if (user) {
+      req.user = user;
+      return next();
+
+      // return res.status(404).json({ code: "NOT_AUTHORIZED_NO USER" });
+    }
+    const googleUser = await GoogleUser.findById(decorded.id);
+    if (!googleUser) {
       return res.status(404).json({ code: "NOT_AUTHORIZED_NO USER" });
     }
-    req.user = user;
-    console.log("user id auth", user._id);
-    // console.log("auth", req.user, req.user.id);
+
+    req.user = googleUser;
     next();
   } catch (error) {
     console.log("a2");

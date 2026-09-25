@@ -49,7 +49,7 @@ export default function GymRecords() {
   }
 
   return (
-    <div className=" bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100  p-4 md:p-6 min-h-screen">
+    <div className=" bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100  p-4 md:p-6">
 
       <h1 className="md:text-2xl font-extrabold text-center mb-2 md:mb-8 text-gray-800">
         🏋️ Gym Records Board

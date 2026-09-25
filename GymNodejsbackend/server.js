@@ -22,7 +22,7 @@ import Razorpay from "razorpay";
 import MemberPlan from "./modules/PlansModule.js";
 import strict from "assert/strict";
 import { format } from "path";
-import googleLogin from "./controller/googleLogin.js";
+import { authGoogle, authGoogleCallback } from "./controller/googleLogin.js";
 import MessageModule from "./modules/messageModule.js";
 import GoogleUser from "./modules/realgoogleUser.js";
 import AllPlans from "./modules/allPlansModule.js";
@@ -77,7 +77,7 @@ app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    origin: "https://duopofitnessclubmanager.vercel.app",
+    origin: "https://duopofitnessclub.vercel.app",
     // origin: "http://localhost:1212",
     origin: true,
     credentials: true,
@@ -89,7 +89,7 @@ start();
 
 const io = new Server(server, {
   cors: {
-    origin: "https://duopofitnessclubmanager.vercel.app",
+    origin: "https://duopofitnessclub.vercel.app",
     // origin: "http://localhost:1212",
     methods: ["GET", "POST"],
   },
@@ -137,8 +137,10 @@ app.use("/", publicRouter);
 app.post("/login", RequireGuest, login);
 app.post("/signup", RequireGuest, signUp);
 app.post("/logout", logout);
-app.post("/auth/google", RequireGuest, googleLogin);
+app.get("/auth/google", RequireGuest, authGoogle);
+app.get("/auth/google/callback", RequireGuest, authGoogleCallback);
 app.post("/createaccount/verify-code", RequireGuest, EmailVerifyCode);
+
 // app.post("/create-order", async (req, res) => {
 //   // const { amount } = req.body;
 

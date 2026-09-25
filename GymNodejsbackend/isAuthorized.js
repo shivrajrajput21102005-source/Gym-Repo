@@ -29,6 +29,8 @@ const isauthorized = async (req, res, next) => {
       // return res.status(404).json({ code: "NOT_AUTHORIZED_NO USER" });
     }
     const googleUser = await GoogleUser.findById(decorded.id);
+    console.log("auth user ggole", googleUser);
+
     if (!googleUser) {
       return res.status(404).json({ code: "NOT_AUTHORIZED_NO USER" });
     }

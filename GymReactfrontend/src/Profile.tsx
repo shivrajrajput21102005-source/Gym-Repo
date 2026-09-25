@@ -2,7 +2,7 @@ import { useState } from "react";
 import UseFetch from "./UseFetch";
 import { NavLink } from "react-router-dom";
 import { FaCamera, FaUser } from "react-icons/fa";
-import UserPasswordUpdate from "./userPasswordUpdate";
+// import UserPasswordUpdate from "./userPasswordUpdate";
 import { useAuth } from "./AuthProvider";
 
 type PostProp = {
@@ -138,23 +138,25 @@ const Profile = () => {
         </div>
         <div>
           {/* <h2 className="text-xl font-bold">{user}</h2> */}
-          <p className="text-gray-600">Nickname</p>
+          <p className="text-gray-600">{user?.name}</p>
         </div>
       </div>
 
       <div className="mt-12">
         <h1 className="text-2xl font-semibold">All Posts</h1>
+        <div>{data?.post.length==0 ? <div><button onClick={()=>window.location.href="/createpost"}>+ Create Post</button></div>: <div>
+          
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           {data?.post.map((post, ind) => (
             <div
-              key={ind}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition"
+            key={ind}
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition"
             >
               <img
                 src={`http://localhost:5000/uploads/${post.image}`}
                 alt={post.title}
                 className="w-full h-48 object-cover"
-              />
+                />
               <div className="p-4">
                 <h2 className="text-lg font-bold">{post.title}</h2>
                 <p className="text-gray-600">{post.content}</p>
@@ -162,18 +164,19 @@ const Profile = () => {
             </div>
           ))}
         </div>
+        </div>}</div>
       </div>
 
-      <div className="mt-8">
+<div className="mt-8">
         <NavLink
           to="/profile/logout"
           className="inline-block bg-red-500 text-white font-bold rounded-lg px-4 py-2 hover:bg-red-600 transition"
-        >
+          >
           Logout
         </NavLink>
       </div>
 
-      <UserPasswordUpdate />
+      {/* <UserPasswordUpdate /> */}
     </div>
   );
 };

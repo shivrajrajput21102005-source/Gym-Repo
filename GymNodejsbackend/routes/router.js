@@ -36,9 +36,14 @@ export const content = async (req, res) => {
 router.get("/", async (req, res) => {
   console.log("req, user", req.user);
   let user = await User.findById(req.user.id);
-  // if (!user) {
-  // const user = await GoogleUser.findById(req.user.id);
-  // }
+  if (user) {
+    res.json({ success: true, user });
+    return;
+  }
+   user = await GoogleUser.findById(req.user.id);
+  if (!user) {
+    res.status(404).json({ success: false });
+  }
   // console.log("user", req.user, "user");
   res.json({ success: true, user });
   console.log("/dataisersuar");

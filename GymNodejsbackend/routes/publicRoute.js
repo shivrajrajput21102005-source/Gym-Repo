@@ -10,6 +10,7 @@ const publicRoute = express.Router();
 // ALL plans Route
 publicRoute.get("/allPlans", async (req, res) => {
   const query = req.query.q;
+  console.log("allplans",await AllPlans.countDocuments())
   const allPlans = await AllPlans.find({
     is_active: true,
     plan_type: `${query}`,

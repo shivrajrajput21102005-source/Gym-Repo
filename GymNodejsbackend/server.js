@@ -42,7 +42,7 @@ console.log("server on express ");
 const app = express();
 app.use(morgan("dev"));
 const server = http.createServer(app);
-const PORT = process.env.PORT | 5000;
+const PORT = process.env.PORT | 5001;
 // ConnectDB().then(() => {
 //   server.listen(PORT, () => {
 //     console.log("server run on the ", PORT);
@@ -71,6 +71,13 @@ const start = async () => {
     console.log("err in start", err);
   }
 };
+const s = async () => {
+  const h = await bcrypt.hash(`1234b`, 10);
+  const ob = { email: "b@gmail.com", password: h, userName: "balu" };
+  const u = await User.create(ob);
+  console.log("bb", u);
+};
+// s()
 app.use(express.json());
 // app.use(cors());
 app.use(cookieParser());

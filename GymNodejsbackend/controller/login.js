@@ -158,12 +158,12 @@ export const EmailVerifyCode = async (req, res) => {
 
       return res.json({ user: user });
     }
-    const userName = verifyData.verificationEmail.split("@")[0];
+    const name = verifyData.verificationEmail.split("@")[0];
     const creatingPassword = randomInt(199999, 999999).toString();
     const hashPassword = await bcrypt.hash(creatingPassword, 10);
     const createUser = await User.create({
       email: verifyData.verificationEmail,
-      userName: userName,
+      name: name,
       password: hashPassword,
     });
     console.log("6s");

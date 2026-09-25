@@ -8,7 +8,7 @@ const ConnectDB = async () => {
       "MongoDB connected successfully",
       mongoose.connection.name,
       mongoose.connection.readyState,
-      // mongoose.connection.db.databaseName,
+     
       process.env.MONGO_URI,
     );
   } catch (err) {

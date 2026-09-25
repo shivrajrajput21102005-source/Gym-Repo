@@ -39,7 +39,7 @@ export const login = async (req, res) => {
   });
 
   res.status(200).json({ code: "LOGIN_SUCCESS", user });
-  console.log("login sucesssedfully");
+  console.log("login successfully");
 };
 
 // console.log("login token 2", req.cookies?.token);
